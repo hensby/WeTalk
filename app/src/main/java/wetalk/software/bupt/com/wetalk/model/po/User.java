@@ -4,20 +4,20 @@ package wetalk.software.bupt.com.wetalk.model.po;
  * Created by ww on 2017/12/2.
  */
 
+//用户
 public class User {
     private Integer user_id;
     private String userName;
     private String password;
     private String avatar;
-    private Integer department_id;
+    private Integer department_id;//修改department表， department使用枚举型。
     private String phone;
     private String email;
     private int userHeader;
-    public User(){
+    private  String remark;
 
-    }
     public User(Integer user_id,String username,String password,String avatar,Integer department_id
-            ,String phone,String email){
+            ,String phone,String email,int userHeader){
         this.user_id = user_id;
         this.userName = username;
         this.password = password;
@@ -25,8 +25,10 @@ public class User {
         this.department_id = department_id;
         this.phone = phone;
         this.email = email;
+        this.userHeader = userHeader;
     }
 
+    //每个人定义的user不同，以下是可以让程序跑起来的
     public User(String userName, Integer department_id, String phone, String email, int userHeader) {
         this.userName = userName;
         this.department_id = department_id;
@@ -44,13 +46,11 @@ public class User {
         this.userHeader = userHeader;
     }
 
-    public int getUserHeader() {
-        return userHeader;
+    public User(){
+
     }
 
-    public void setUserHeader(int userHeader) {
-        this.userHeader = userHeader;
-    }
+    //以上为每个人定义的user
 
     public Integer getUser_id() {
         return user_id;
@@ -108,19 +108,21 @@ public class User {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("User{");
-        sb.append("user_id=").append(user_id);
-        sb.append(", userName='").append(userName).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", avatar='").append(avatar).append('\'');
-        sb.append(", department_id=").append(department_id);
-        sb.append(", phone='").append(phone).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", userHeader=").append(userHeader);
-        sb.append('}');
-        return sb.toString();
+    public int getUserHeader() {
+        return userHeader;
     }
+
+    public void setUserHeader(int userHeader) {
+        this.userHeader = userHeader;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
 }
 
