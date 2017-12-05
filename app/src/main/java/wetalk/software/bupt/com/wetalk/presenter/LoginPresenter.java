@@ -1,6 +1,7 @@
 package wetalk.software.bupt.com.wetalk.presenter;
 
 import android.content.Context;
+import android.os.Handler;
 
 import wetalk.software.bupt.com.wetalk.model.ModelInter;
 import wetalk.software.bupt.com.wetalk.model.OnLoginListener;
@@ -34,31 +35,28 @@ public class LoginPresenter {
      * 登录功能，其基本实现和注册一样，只是模型层处理的逻辑不一样
      */
     public void login(){
-        //     viewInter.showLoading();
         modelInter.login(viewInter.getUsername(), viewInter.getPassword(), new OnLoginListener() {
             @Override
             public void loginSuccess(final User user) {
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        viewInter.hideLoading();
-//                        viewInter.successHint(user,TAG);
-//                    }
-//                },1000);
+               Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        viewInter.successHint(user,TAG);
+                    }
+                },1000);
                 viewInter.successHint(user,TAG);
             }
 
             @Override
             public void loginFail(final User user) {
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        viewInter.hideLoading();
-//                        viewInter.failHint(user,TAG);
-//                    }
-//                },1000);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        viewInter.failHint(user,TAG);
+                    }
+                },1000);
                 viewInter.failHint(user,TAG);
             }
         });

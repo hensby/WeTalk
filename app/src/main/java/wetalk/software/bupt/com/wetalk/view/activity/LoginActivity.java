@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements ViewInter {
                     dialog.show();
 
                 } else {
-                    /*presenter.login();*/
+                    presenter.login();
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(intent);

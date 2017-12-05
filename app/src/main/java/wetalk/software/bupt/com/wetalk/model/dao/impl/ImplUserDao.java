@@ -4,6 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import wetalk.software.bupt.com.wetalk.model.dao.UserDao;
 import wetalk.software.bupt.com.wetalk.model.po.User;
@@ -17,13 +25,17 @@ public class ImplUserDao implements UserDao {
     private UserDBHelper dbHelper;
     private SQLiteDatabase database;
     private ContentValues values;
-
+    private Context context;
+    private String Jsonusername;
+    private String Jsonpassword;
     public ImplUserDao(Context context) {
         dbHelper = new UserDBHelper(context);
+        this.context = context;
     }
 
     /**
      * 添加新用户
+     *
      * @param user 注册的用户信息
      */
     @Override
@@ -53,7 +65,7 @@ public class ImplUserDao implements UserDao {
 //        String sql = "delete from " + DBHelper.TABLENAME + " where " + DBHelper.COLNUMNAME + " = ?";
 //        database.execSQL(sql,new Object[]{name});
         //方法二：封装的api操作，直接操作方法即可
-        database.delete(UserDBHelper.TABLENAME,UserDBHelper.COLNUMNAME + " = ?",new String[]{name});
+        database.delete(UserDBHelper.TABLENAME, UserDBHelper.COLNUMNAME + " = ?", new String[]{name});
         database.close();
     }
 
@@ -71,8 +83,8 @@ public class ImplUserDao implements UserDao {
 //        database.execSQL(sql,new Object[]{pass,name});
         //方法二：封装的api操作，直接操作方法即可
         values = new ContentValues();
-        values.put(UserDBHelper.COLNUMPASS,pass);
-        database.update(UserDBHelper.TABLENAME,values,UserDBHelper.COLNUMNAME + " = ?",new String[]{pass});
+        values.put(UserDBHelper.COLNUMPASS, pass);
+        database.update(UserDBHelper.TABLENAME, values, UserDBHelper.COLNUMNAME + " = ?", new String[]{pass});
         database.close();
     }
 
@@ -90,7 +102,7 @@ public class ImplUserDao implements UserDao {
         //方法二：封装的api操作，直接操作方法即可
         Cursor cursor = database.query(UserDBHelper.TABLENAME, null, UserDBHelper.COLNUMNAME + " = ?", null, null, null, null);
         User user = null;
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             user = new User();
             user.setUserName(cursor.getString(cursor.getColumnIndex(UserDBHelper.COLNUMNAME)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(UserDBHelper.COLNUMPASS)));
@@ -114,6 +126,7 @@ public class ImplUserDao implements UserDao {
 
     /**
      * 判断是否登录成功
+     *
      * @param user 登录的用户信息
      * @return
      */
@@ -127,12 +140,44 @@ public class ImplUserDao implements UserDao {
         Cursor cursor = database.query(UserDBHelper.TABLENAME, null, UserDBHelper.COLNUMNAME + " = ? and "
                 + UserDBHelper.COLNUMPASS + " = ?", new String[]{user.getUserName(), user.getPassword()}, null, null, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             cursor.close();
             return true;
         }
         cursor.close();
         return false;
     }
+
+    public boolean isLoginSuccessWithJson(User user) {
+        try {
+            //InputStreamReader 将字节输入流转换为字符流
+            InputStreamReader isr = new InputStreamReader(context.getAssets().open("user.json"), "UTF-8");
+            //包装字符流,将字符流放入缓存里
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            //StringBuilder和StringBuffer功能类似,存储字符串
+            StringBuilder builder = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                //append 被选元素的结尾(仍然在内部)插入指定内容,缓存的内容依次存放到builder中
+                builder.append(line);
+            }
+            br.close();
+            isr.close();
+            //builder.toString()返回表示此序列中数据的字符串
+            JSONObject root = new JSONObject(builder.toString());
+             Jsonusername = root.getString("username");
+            Jsonpassword = root.getString("password");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (user.getUserName().equals(Jsonusername)&&user.getPassword().equals(Jsonpassword)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
 

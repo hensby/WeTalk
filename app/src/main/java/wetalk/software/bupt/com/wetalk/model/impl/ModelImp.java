@@ -47,7 +47,7 @@ public class ModelImp implements ModelInter {
     public void login(String name, String pass, OnLoginListener listener) {
         User user = new User(name,pass);
         //判断是否登录成功
-        if(userDao.isLoginSuccess(user)){
+        if(userDao.isLoginSuccessWithJson(user)){
             listener.loginSuccess(user);
         }else{
             listener.loginFail(user);
