@@ -174,7 +174,7 @@ public class WeTalkMsg extends WeTalkObject {
                 msg.getBelongId(), msg.getBelongUsername(), msg.getBelongAvatar(),
                 msg.getBelongNick(), msg.getMsgTime(), WeTalkConfig.TYPE_TEXT);
         if(message!=null){
-            BmobChatManager.getInstance(context).saveReceiveMessage(false,message);
+            ChatManagerPresenter.getInstance(context).saveReceiveMessage(false,message);
         }
     }
 

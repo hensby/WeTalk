@@ -7,12 +7,18 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
+
+import wetalk.software.bupt.com.wetalk.listener.DeleteListener;
+import wetalk.software.bupt.com.wetalk.listener.ThumbnailUrlListener;
+import wetalk.software.bupt.com.wetalk.listener.UploadFileListener;
 
 /**
  * Created by zhangjie on 2017/12/6.
@@ -27,7 +33,7 @@ public class WeTalkFile implements Serializable{
     private String group = null;
     protected String url = null;
     private String __type = "File";
-    static ImageLoader mImageLoader;
+    //static ImageLoader mImageLoader;
     static int cacheSize;
 
     public WeTalkFile() {
@@ -81,7 +87,7 @@ public class WeTalkFile implements Serializable{
     }
 
     public void uploadblock(final Context context, final UploadFileListener listener) {
-        if(file.length() > (long)maxWeTalkFileSize_block) {
+        /*if(file.length() > (long)maxWeTalkFileSize_block) {
             listener.postOnFailure(9007, "WeTalkFile File size must be less than 200M.");
         } else if(!file.exists()) {
             listener.postOnFailure(9008, "WeTalkFile File does not exist.");
@@ -114,7 +120,7 @@ public class WeTalkFile implements Serializable{
                     })).i();
                 }
             }).start();
-        }
+        }*/
     }
 
     public void delete(Context context) {
@@ -134,7 +140,7 @@ public class WeTalkFile implements Serializable{
 
         HashMap var7;
         (var7 = new HashMap()).put("params", var3);
-        This var6 = new This(context, 1, "api", "/8/delfile", var7);
+        /*This var6 = new This(context, 1, "api", "/8/delfile", var7);
         of.I(context).V(var6, new XListener() {
             public final void onSuccess(V data) {
                 if(listener != null) {
@@ -163,7 +169,7 @@ public class WeTalkFile implements Serializable{
                 }
 
             }
-        });
+        });*/
     }
 
     public void getThumbnailUrl(Context context, int width, int height, ThumbnailUrlListener listener) {
@@ -188,7 +194,7 @@ public class WeTalkFile implements Serializable{
 
         HashMap var10;
         (var10 = new HashMap()).put("params", var6);
-        This width1 = new This(context, 1, "api", "/8/thumbnail", var10);
+        /*This width1 = new This(context, 1, "api", "/8/thumbnail", var10);
         of.I(context).V(width1, new XListener() {
             public final void onSuccess(V data) {
                 this.aE.url = data.bX().af("url").getAsString();
@@ -200,7 +206,7 @@ public class WeTalkFile implements Serializable{
             public final void onFailure(int code, String e) {
                 listener.onFailure(code, e);
             }
-        });
+        });*/
     }
 
     public void loadImageThumbnail(Context context, ImageView imageView, int width, int height) {
@@ -226,7 +232,7 @@ public class WeTalkFile implements Serializable{
 
         HashMap var10;
         (var10 = new HashMap()).put("params", var6);
-        This width1 = new This(context, 1, "api", "/8/thumbnail", var10);
+        /*This width1 = new This(context, 1, "api", "/8/thumbnail", var10);
         of.I(context).V(width1, new XListener() {
             public final void onSuccess(V data) {
                 byte[] data1;
@@ -236,11 +242,11 @@ public class WeTalkFile implements Serializable{
 
             public final void onFailure(int code, String e) {
             }
-        });
+        });*/
     }
 
     public void loadImage(Context context, final ImageView imageView) {
-        int var3 = ((ActivityManager)context.getSystemService("activity")).getMemoryClass();
+        /*int var3 = ((ActivityManager)context.getSystemService("activity")).getMemoryClass();
         cacheSize = var3 * 1048576 / 8;
         (mImageLoader = new ImageLoader(of.I(context).Z(context), new cn.bmob.v3.util.This(cacheSize))).get(this.getFileUrl(context), new ImageListener() {
             public final void onErrorResponse(VolleyError error) {
@@ -249,20 +255,20 @@ public class WeTalkFile implements Serializable{
             public final void onResponse(ImageContainer response, boolean isImmediate) {
                 imageView.setImageBitmap(response.getBitmap());
             }
-        });
+        });*/
     }
 
     public void loadImage(Context context, final ImageView imageView, int maxWidth, int maxHeight) {
         int var5 = ((ActivityManager)context.getSystemService("activity")).getMemoryClass();
         cacheSize = var5 * 1048576 / 8;
-        (mImageLoader = new ImageLoader(of.I(context).Z(context), new cn.bmob.v3.util.This(cacheSize))).get(this.getFileUrl(context), new ImageListener() {
+        /*(mImageLoader = new ImageLoader(of.I(context).Z(context), new cn.bmob.v3.util.This(cacheSize))).get(this.getFileUrl(context), new ImageListener() {
             public final void onErrorResponse(VolleyError error) {
             }
 
             public final void onResponse(ImageContainer response, boolean isImmediate) {
                 imageView.setImageBitmap(response.getBitmap());
             }
-        }, maxWidth, maxHeight);
+        }, maxWidth, maxHeight);*/
     }
 
     public String getUrl() {
@@ -290,13 +296,13 @@ public class WeTalkFile implements Serializable{
     }
 
     public String getFileUrl(Context context) {
-        String context1;
-        if(this.url.contains("http://")) {
+        String context1="";
+        /*if(this.url.contains("http://")) {
             context1 = this.url;
         } else {
             context1 = (new i(context)).getValue("file", "http://file.bmob.cn");
             context1 = context1 + "/" + this.url;
-        }
+        }*/
 
         return context1;
     }

@@ -14,26 +14,39 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.List;
 
 import wetalk.software.bupt.com.wetalk.R;
+import wetalk.software.bupt.com.wetalk.adapter.EmoViewPagerAdapter;
+import wetalk.software.bupt.com.wetalk.adapter.EmoteAdapter;
+import wetalk.software.bupt.com.wetalk.adapter.MessageChatAdapter;
 import wetalk.software.bupt.com.wetalk.model.po.ChatUser;
+import wetalk.software.bupt.com.wetalk.model.po.FaceText;
+import wetalk.software.bupt.com.wetalk.model.po.WeTalkConstant;
 import wetalk.software.bupt.com.wetalk.presenter.ChatManagerPresenter;
 import wetalk.software.bupt.com.wetalk.util.CommonUtils;
+import wetalk.software.bupt.com.wetalk.util.FaceTextUtils;
 import wetalk.software.bupt.com.wetalk.view.viewinter.EmoticonsEditText;
 import wetalk.software.bupt.com.wetalk.view.viewinter.HeaderLayout;
 import wetalk.software.bupt.com.wetalk.view.viewinter.xlist.XListView;
@@ -466,16 +479,16 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
 
     }
 
-    /*List<FaceText> emos;
+    List<FaceText> emos;
 
-    *//**
+    /**
      * 初始化表情布局
      * @Title: initEmoView
      * @Description: TODO
      * @param
      * @return void
      * @throws
-     *//*
+     */
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void initEmoView() {
         pager_emo = (ViewPager) findViewById(R.id.pager_emo);
@@ -486,9 +499,9 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
             views.add(getGridView(i));
         }
         pager_emo.setAdapter(new EmoViewPagerAdapter(views));
-    }*/
+    }
 
-    /*private View getGridView(final int i) {
+    private View getGridView(final int i) {
         View view = View.inflate(this, R.layout.include_emo_gridview, null);
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         List<FaceText> list = new ArrayList<FaceText>();
@@ -500,7 +513,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         final EmoteAdapter gridAdapter = new EmoteAdapter(ChatActivity.this,
                 list);
         gridview.setAdapter(gridAdapter);
-        gridview.setOnItemClickListener(new OnItemClickListener() {
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -528,9 +541,9 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
             }
         });
         return view;
-    }*/
+    }
 
-    //MessageChatAdapter mAdapter;
+    MessageChatAdapter mAdapter;
 
     private void initXListView() {
         // 首先不允许加载更多
@@ -543,32 +556,32 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         mListView.setDividerHeight(0);
         // 加载数据
         initOrRefresh();
-        /**mListView.setSelection(mAdapter.getCount() - 1);
-         mListView.setOnTouchListener(new OnTouchListener() {
-        @Override
-        public boolean onTouch(View arg0, MotionEvent arg1) {
-        // TODO Auto-generated method stub
-        hideSoftInputView();
-        layout_more.setVisibility(View.GONE);
-        layout_add.setVisibility(View.GONE);
-        btn_chat_voice.setVisibility(View.VISIBLE);
-        btn_chat_keyboard.setVisibility(View.GONE);
-        btn_chat_send.setVisibility(View.GONE);
-        return false;
-        }
+        mListView.setSelection(mAdapter.getCount() - 1);
+        mListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                hideSoftInputView();
+                layout_more.setVisibility(View.GONE);
+                layout_add.setVisibility(View.GONE);
+                btn_chat_voice.setVisibility(View.VISIBLE);
+                btn_chat_keyboard.setVisibility(View.GONE);
+                btn_chat_send.setVisibility(View.GONE);
+                return false;
+            }
         });
 
-         // 重发按钮的点击事件
-         mAdapter.setOnInViewClickListener(R.id.iv_fail_resend,
-         new MessageChatAdapter.onInternalClickListener() {
+        // 重发按钮的点击事件
+        mAdapter.setOnInViewClickListener(R.id.iv_fail_resend,
+                new MessageChatAdapter.onInternalClickListener() {
 
-        @Override
-        public void OnClickListener(View parentV, View v,
-        Integer position, Object values) {
-        // 重发消息
-        showResendDialog(parentV, v, values);
-        }
-        });*/
+                    @Override
+                    public void OnClickListener(View parentV, View v,
+                                                Integer position, Object values) {
+                        // 重发消息
+                        showResendDialog(parentV, v, values);
+                    }
+                });
     }
 
     /**
@@ -839,7 +852,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
                     Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        //startActivityForResult(intent, BmobConstants.REQUESTCODE_TAKE_LOCAL);
+        startActivityForResult(intent, WeTalkConstant.REQUESTCODE_TAKE_LOCAL);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
