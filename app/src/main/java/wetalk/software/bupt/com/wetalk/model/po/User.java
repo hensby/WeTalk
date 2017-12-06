@@ -52,7 +52,7 @@ public class User {
         this.userHeader = userHeader;
     }
 
-    public Integer getUserid() {
+    public Integer getUserID() {
         return userID;
     }
 

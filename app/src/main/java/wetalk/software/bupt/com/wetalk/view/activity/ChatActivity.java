@@ -31,6 +31,8 @@ import android.widget.Toast;
 import java.util.EventListener;
 
 import wetalk.software.bupt.com.wetalk.R;
+import wetalk.software.bupt.com.wetalk.model.po.ChatUser;
+import wetalk.software.bupt.com.wetalk.presenter.ChatManagerPresenter;
 import wetalk.software.bupt.com.wetalk.util.CommonUtils;
 import wetalk.software.bupt.com.wetalk.view.viewinter.EmoticonsEditText;
 import wetalk.software.bupt.com.wetalk.view.viewinter.HeaderLayout;
@@ -56,7 +58,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
 
     String targetId = "";
 
-    //BmobChatUser targetUser;
+    ChatUser targetUser;
 
     private static int MsgPagerNum;
 
@@ -65,6 +67,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
     private ViewPager pager_emo;
 
     private TextView tv_picture, tv_camera, tv_location;
+    private ChatManagerPresenter manager;
     protected HeaderLayout mHeaderLayout;
 
     // 语音有关
@@ -81,11 +84,11 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        //manager = BmobChatManager.getInstance(this);
+        manager = ChatManagerPresenter.getInstance(this);
         MsgPagerNum = 0;
         // 组装聊天对象
-        //targetUser = (BmobChatUser) getIntent().getSerializableExtra("user");
-        //targetId = targetUser.getObjectId();
+        targetUser = (ChatUser) getIntent().getSerializableExtra("user");
+        targetId = String.valueOf(targetUser.getUserID());
         //BmobLog.i("聊天对象：" + targetUser.getUserName() + ",targetId = "
 //				+ targetId);
         //注册广播接收器
