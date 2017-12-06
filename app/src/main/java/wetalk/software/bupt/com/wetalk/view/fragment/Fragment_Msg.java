@@ -18,21 +18,5 @@ import wetalk.software.bupt.com.wetalk.view.activity.ChooseMemberActivity;
  */
 
 public class Fragment_Msg extends Fragment {
-    private View view;
-    private Activity mActivity;
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.layout_to_hengchao,container,false);
-        mActivity=getActivity();
-        Button bt=(Button)view.findViewById(R.id.bt);
-        bt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(mActivity, ChooseMemberActivity.class);
-                startActivity(intent);
-            }
-        });
-        return view;
-    }
+
 }

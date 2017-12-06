@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
             // mLoadingDialog.show();
             switch (position) {
                 case 0:// 发起群聊
+                    Intent intent=new Intent(MainActivity.this, ChooseMemberActivity.class);
+                    startActivity(intent);
                     break;
                 case 1:// 添加朋友
                     break;
