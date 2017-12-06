@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment_Friends contactlistfragment;
     private Fragment_Profile profilefragment;
     private ImageView[] imagebuttons;
+    private ImageView noShowAdd;//不显示我界面右上角“+”
     private TextView[] textviews;
     private int currentIndex,index;
     TitlePopup titlePopup;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.re_profile:
                 index=2;
                 txt_title.setText("我");
+                noShowAdd = (ImageView) findViewById(R.id.img_right);
+                noShowAdd.setVisibility(View.INVISIBLE);
                 break;
         }
         if(currentIndex!=index){

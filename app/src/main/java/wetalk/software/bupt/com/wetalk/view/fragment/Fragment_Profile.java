@@ -45,6 +45,7 @@ public class Fragment_Profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.activity_my_info,container,false);
+
         mContext=getContext();
         mActivity=getActivity();
         showMyInfo();
