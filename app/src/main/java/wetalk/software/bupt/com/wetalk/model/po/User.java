@@ -4,34 +4,32 @@ package wetalk.software.bupt.com.wetalk.model.po;
  * Created by ww on 2017/12/2.
  */
 
-//用户
 public class User {
-    private Integer user_id;
+    private Integer userID;
     private String userName;
     private String password;
     private String avatar;
-    private Integer department_id;//修改department表， department使用枚举型。
+    private Integer departmentID;
     private String phone;
     private String email;
     private int userHeader;
-    private  String remark;
+    public User(){
 
-    public User(Integer user_id,String username,String password,String avatar,Integer department_id
-            ,String phone,String email,int userHeader){
-        this.user_id = user_id;
+    }
+    public User(Integer userid,String username,String password,String avatar,Integer departmentid
+            ,String phone,String email){
+        this.userID = userid;
         this.userName = username;
         this.password = password;
         this.avatar = avatar;
-        this.department_id = department_id;
+        this.departmentID = departmentid;
         this.phone = phone;
         this.email = email;
-        this.userHeader = userHeader;
     }
 
-    //每个人定义的user不同，以下是可以让程序跑起来的
     public User(String userName, Integer department_id, String phone, String email, int userHeader) {
         this.userName = userName;
-        this.department_id = department_id;
+        this.departmentID = department_id;
         this.phone = phone;
         this.email = email;
         this.userHeader = userHeader;
@@ -46,18 +44,20 @@ public class User {
         this.userHeader = userHeader;
     }
 
-    public User(){
-
+    public int getUserHeader() {
+        return userHeader;
     }
 
-    //以上为每个人定义的user
+    public void setUserHeader(int userHeader) {
+        this.userHeader = userHeader;
+    }
 
     public Integer getUser_id() {
-        return user_id;
+        return userID;
     }
 
     public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+        this.userID = user_id;
     }
 
     public String getUserName() {
@@ -85,11 +85,11 @@ public class User {
     }
 
     public Integer getDepartment_id() {
-        return department_id;
+        return departmentID;
     }
 
     public void setDepartment_id(Integer department_id) {
-        this.department_id = department_id;
+        this.departmentID = department_id;
     }
 
     public String getPhone() {
@@ -108,21 +108,19 @@ public class User {
         this.email = email;
     }
 
-    public int getUserHeader() {
-        return userHeader;
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("userID=").append(userID);
+        sb.append(", userName='").append(userName).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", avatar='").append(avatar).append('\'');
+        sb.append(", departmentID=").append(departmentID);
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", userHeader=").append(userHeader);
+        sb.append('}');
+        return sb.toString();
     }
-
-    public void setUserHeader(int userHeader) {
-        this.userHeader = userHeader;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
 }
 

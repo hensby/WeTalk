@@ -15,4 +15,5 @@ public interface UserDao {
     boolean isExistsUser(User user);//判断是否存在重复用户
 
     boolean isLoginSuccess(User user);
+    boolean isLoginSuccessWithJson(User user);
 }
