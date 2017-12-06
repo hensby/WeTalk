@@ -23,7 +23,6 @@
         <activity android:name=".view.activity.ChooseMemberActivity" />
         <activity android:name=".view.activity.FriendsActivity" />
         <activity android:name=".view.activity.UserInfoActivity" />
-        <activity android:name=".view.activity.MyInfoActivity" />
         <activity android:name=".view.activity.UpdateEmailActivity" />
         <activity android:name=".view.activity.UpdatePhoneNumberActivity" />
         <activity android:name=".view.activity.ChangePasswordActivity" />

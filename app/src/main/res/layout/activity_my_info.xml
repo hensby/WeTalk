@@ -1,147 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gray1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的资料"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+    <!--我界面抬头-->
+   <!-- <include
+        android:id="@+id/layout_title_myinfo"
+        layout="@layout/layout_title_myinfo" />-->
 
-    <ImageView
-        android:id="@+id/id_head_portrait"
+    <!-- 展示头像 姓名 部门-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="119dp" />
+        android:layout_height="100dp"
+        android:layout_marginTop="30dip"
+        android:background="@color/white"
+        android:id="@+id/relativeLayoutShow">
 
-    <TextView
-        android:id="@+id/id_show_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/id_show_department"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/id_head_portrait"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
 
+        <TextView
+            android:id="@+id/id_show_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:id="@+id/id_show_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="60dp" />
+    </RelativeLayout>
+
+    <!--查看，更改手机号-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="30dp">
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/relativeLayoutShow"
+        android:id="@+id/relativeLayout">
+
+        <ImageButton
+            android:id="@+id/id_bt_update_phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_me_phone"
+            android:id="@+id/imageView_phone" />
 
         <TextView
             android:id="@+id/id_show_phonenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
             android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/imageView_phone"
             android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/id_bt_update_phonenumber"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改"
+            android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="10dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/register_bottom_arrow" />
+
     </RelativeLayout>
 
+    <!--查看，更改邮箱-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="30dp">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout2">
+
+        <ImageButton
+            android:id="@+id/id_bt_update_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_me_email1"
+            android:id="@+id/imageView_email" />
+
         <TextView
             android:id="@+id/id_show_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/imageView_email"
             android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/id_bt_update_email"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="修改"
+            android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="10dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/register_bottom_arrow" />
+
     </RelativeLayout>
 
+    <!--铃声设置-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:id="@+id/relativeLayout3">
 
-        <TextView
-            android:layout_width="120sp"
+
+
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/white"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
             android:layout_centerVertical="true"
-            android:text="响铃提示开关" />
+            android:src="@drawable/icon_me_bell0"
+            android:id="@+id/imageView_bell" />
 
         <Switch
             android:id="@+id/id_set_bell"
-            android:layout_width="40sp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="19dp"
-            />
+            android:layout_marginEnd="10dp" />
 
 
     </RelativeLayout>
 
+    <!--振动设置-->
     <RelativeLayout
+        android:id="@+id/relativeLayout5"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="120sp"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/white"
+            android:gravity="center" />
+
+
+        <ImageView
+            android:id="@+id/imageView_disturb"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="勿扰模式开关" />
+            android:layout_marginStart="32dp"
+            android:src="@drawable/icon_me_disturb" />
+
 
         <Switch
             android:id="@+id/id_set_disturb"
-            android:layout_width="40sp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="19dp"
-            />
-
+            android:layout_marginEnd="10dp" />
 
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/id_change_password"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="修改密码" />
+    <!--修改密码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout5"
+        android:layout_marginTop="13dp"
+        android:id="@+id/relative6">
 
-    <Button
-        android:id="@+id/id_exit"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="退出" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/id_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="修改密码"
+            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <!--退出-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relative6"
+        android:layout_marginTop="1dp">
+
+
+        <ImageButton
+            android:id="@+id/id_exit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="退出"
+            android:textSize="18dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
