@@ -1,4 +1,4 @@
-package wetalk.software.bupt.com.wetalk.view.viewinter;
+package wetalk.software.bupt.com.wetalk.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

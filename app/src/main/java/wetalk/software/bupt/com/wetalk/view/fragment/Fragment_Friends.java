@@ -3,6 +3,9 @@ package wetalk.software.bupt.com.wetalk.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +15,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.adapter.ContactAdapter;
 import wetalk.software.bupt.com.wetalk.model.po.User;
+import wetalk.software.bupt.com.wetalk.util.CharacterParser;
 import wetalk.software.bupt.com.wetalk.util.PinYinUtil;
+import wetalk.software.bupt.com.wetalk.util.PinyinComparator;
 import wetalk.software.bupt.com.wetalk.view.activity.UserInfoActivity;
-import wetalk.software.bupt.com.wetalk.view.viewinter.SideBar;
+import wetalk.software.bupt.com.wetalk.widget.ClearEditText;
+import wetalk.software.bupt.com.wetalk.widget.SideBar;
 
 /**
  * Created by Administrator on 2017/11/29.
@@ -31,11 +38,15 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
     private ListView lvContact;
     private SideBar indexBar;
     private TextView mDialogText;
-
+    private ClearEditText mClearEditText;
+    /**
+     * 汉字转换为拼音的类
+     */
+    private CharacterParser characterParser=new CharacterParser();
 
     private LayoutInflater inflater;
-    private List<User> userList;
-    private ContactAdapter adapter;
+    private List<User> userList;//朋友信息
+    private ContactAdapter adapter;//通讯录listview的适配器
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,15 +60,13 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
     }
 
     private void initViews() {
-
-
         lvContact = (ListView) layout.findViewById(R.id.lvContact);
         mDialogText = (TextView) layout.findViewById(R.id.tv_char);
         indexBar = (SideBar) layout.findViewById(R.id.sideBar);
         indexBar.setTextView(mDialogText);
         layout_head = inflater.inflate(R.layout.layout_head_friend, null);
+        mClearEditText = (ClearEditText)layout_head.findViewById(R.id.et_msg_search);
         lvContact.addHeaderView(layout_head);
-
     }
 
 
@@ -104,8 +113,27 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
         lvContact.setOnItemClickListener(this);
         indexBar.setOnTextViewChange(this);
         layout_head.findViewById(R.id.layout_addfriend).setOnClickListener(this);
-        layout_head.findViewById(R.id.layout_search).setOnClickListener(this);
         layout_head.findViewById(R.id.layout_group).setOnClickListener(this);
+        mClearEditText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                filterData(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -131,6 +159,28 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
 //            default:
 //                break;
         }
+    }
+
+    private void filterData(String filterStr) {
+        List<User> filterDateList = new ArrayList<>();
+        if (TextUtils.isEmpty(filterStr)) {
+            filterDateList = userList;
+        } else {
+            filterDateList.clear();
+            for (User sortModel : userList) {
+                String name = sortModel.getUserName();
+                if (name != null) {
+                    if (name.indexOf(filterStr.toString()) != -1
+                            || characterParser.getSelling(name).startsWith(
+                            filterStr.toString())) {
+                        filterDateList.add(sortModel);
+                    }
+                }
+            }
+        }
+        // 根据a-z进行排序
+        Collections.sort(filterDateList, new PinyinComparator());
+        adapter.updateListView(filterDateList);
     }
 
 }

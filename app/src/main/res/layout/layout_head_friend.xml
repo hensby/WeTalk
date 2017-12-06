@@ -20,7 +20,7 @@
             android:textColor="@color/black"
             android:text="@string/recommended_friends"
             android:layout_marginLeft="10dp"
-            android:singleLine="true" />
+             />
 
     </LinearLayout>
 
@@ -44,7 +44,7 @@
             android:textColor="@color/black"
             android:text="@string/group_chats"
             android:layout_marginLeft="10dp"
-            android:singleLine="true" />
+            />
     </LinearLayout>
 
     <View

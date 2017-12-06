@@ -15,7 +15,7 @@ import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.model.po.User;
 import wetalk.software.bupt.com.wetalk.util.PinYinUtil;
 import wetalk.software.bupt.com.wetalk.util.PinyinComparator;
-import wetalk.software.bupt.com.wetalk.view.ViewHolder;
+import wetalk.software.bupt.com.wetalk.util.ViewHolder;
 
 
 /**
@@ -80,6 +80,11 @@ public class ContactAdapter extends BaseAdapter  {
         ivAvatar.setImageResource(R.drawable.head);
         tvNick.setText(user.getUserName());
         return convertView;
+    }
+
+    public void updateListView(List<User> list){
+        UserInfos=list;
+        notifyDataSetChanged();
     }
 
 }

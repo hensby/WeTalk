@@ -35,7 +35,7 @@
             android:textColor="@color/white"
             android:gravity="center"  />
 
-        <wetalk.software.bupt.com.wetalk.view.viewinter.SideBar
+        <wetalk.software.bupt.com.wetalk.widget.SideBar
             android:id="@+id/sideBar"
             android:layout_height="match_parent"
             android:layout_width="20dp"
