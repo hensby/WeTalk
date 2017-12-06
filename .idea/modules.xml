@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WeTalk.iml" filepath="$PROJECT_DIR$/WeTalk.iml" />
+      <module fileurl="file://D:/WeTalk 04/WeTalk/WeTalk.iml" filepath="D:/WeTalk 04/WeTalk/WeTalk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:/WeTalk 04/WeTalk/app/app.iml" filepath="D:/WeTalk 04/WeTalk/app/app.iml" />
     </modules>
   </component>
 </project>
