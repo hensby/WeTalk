@@ -27,9 +27,9 @@ public class User {
         this.email = email;
     }
 
-    public User(String userName, Integer department_id, String phone, String email, int userHeader) {
+    public User(String userName, Integer departmentid, String phone, String email, int userHeader) {
         this.userName = userName;
-        this.departmentID = department_id;
+        this.departmentID = departmentid;
         this.phone = phone;
         this.email = email;
         this.userHeader = userHeader;
@@ -52,12 +52,12 @@ public class User {
         this.userHeader = userHeader;
     }
 
-    public Integer getUser_id() {
+    public Integer getUserid() {
         return userID;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.userID = user_id;
+    public void setUserid(Integer userid) {
+        this.userID = userid;
     }
 
     public String getUserName() {
@@ -88,8 +88,8 @@ public class User {
         return departmentID;
     }
 
-    public void setDepartment_id(Integer department_id) {
-        this.departmentID = department_id;
+    public void setDepartment_id(Integer departmentid) {
+        this.departmentID = departmentid;
     }
 
     public String getPhone() {
