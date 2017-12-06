@@ -13,14 +13,14 @@ import android.widget.Toast;
 
 import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.model.po.User;
-import wetalk.software.bupt.com.wetalk.presenter.LoginPresenter;
+import wetalk.software.bupt.com.wetalk.presenter.Presenter;
 import wetalk.software.bupt.com.wetalk.view.viewinter.ViewInter;
 
 public class LoginActivity extends AppCompatActivity implements ViewInter {
     EditText et_account,et_password;
     Button btn_login;
     TextView tv_forgetpassword;
-    private LoginPresenter presenter;
+    private Presenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements ViewInter {
         //初始化事件
         event();
         //建立与presenter层的关系，创建presenter对象
-
+        presenter = new Presenter(this, LoginActivity.this);
     }
 
     public void initView(){
@@ -119,17 +119,17 @@ public class LoginActivity extends AppCompatActivity implements ViewInter {
 
     @Override
     public void failHint(User user,String tag) {
-        //  Toast.makeText(this,"用户" + user.getUserName() + tag + "失败,密码或账号不正确，maybe not this user",Toast.LENGTH_LONG).show();
-        AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
-        dialog.setTitle("警告");
-        dialog.setMessage("登录失败\n密码或账号不正确");
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("OK",new DialogInterface.OnClickListener(){
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        dialog.show();
+         Toast.makeText(this,"用户" + user.getUserName() + tag + "失败,密码或账号不正确，maybe not this user",Toast.LENGTH_LONG).show();
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
+//        dialog.setTitle("警告");
+//        dialog.setMessage("登录失败\n密码或账号不正确");
+//        dialog.setCancelable(false);
+//        dialog.setPositiveButton("OK",new DialogInterface.OnClickListener(){
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        });
+//        dialog.show();
     }
 }

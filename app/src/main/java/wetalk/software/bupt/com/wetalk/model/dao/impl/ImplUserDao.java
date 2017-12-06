@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,8 +24,8 @@ public class ImplUserDao implements UserDao {
     private SQLiteDatabase database;
     private ContentValues values;
     private Context context;
-    private String Jsonusername;
-    private String Jsonpassword;
+     String Jsonusername;
+     String Jsonpassword;
     public ImplUserDao(Context context) {
         dbHelper = new UserDBHelper(context);
         this.context = context;
@@ -172,7 +170,7 @@ public class ImplUserDao implements UserDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (user.getUserName().equals(Jsonusername)&&user.getPassword().equals(Jsonpassword)){
+        if (user.getUserName().equals(Jsonusername) && user.getPassword().equals(Jsonpassword)){
             return true;
         }else{
             return false;

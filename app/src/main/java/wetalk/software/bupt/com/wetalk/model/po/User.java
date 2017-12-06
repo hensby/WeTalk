@@ -5,31 +5,31 @@ package wetalk.software.bupt.com.wetalk.model.po;
  */
 
 public class User {
-    private Integer user_id;
+    private Integer userID;
     private String userName;
     private String password;
     private String avatar;
-    private Integer department_id;
+    private Integer departmentID;
     private String phone;
     private String email;
     private int userHeader;
     public User(){
 
     }
-    public User(Integer user_id,String username,String password,String avatar,Integer department_id
+    public User(Integer userid,String username,String password,String avatar,Integer departmentid
             ,String phone,String email){
-        this.user_id = user_id;
+        this.userID = userid;
         this.userName = username;
         this.password = password;
         this.avatar = avatar;
-        this.department_id = department_id;
+        this.departmentID = departmentid;
         this.phone = phone;
         this.email = email;
     }
 
     public User(String userName, Integer department_id, String phone, String email, int userHeader) {
         this.userName = userName;
-        this.department_id = department_id;
+        this.departmentID = department_id;
         this.phone = phone;
         this.email = email;
         this.userHeader = userHeader;
@@ -53,11 +53,11 @@ public class User {
     }
 
     public Integer getUser_id() {
-        return user_id;
+        return userID;
     }
 
     public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+        this.userID = user_id;
     }
 
     public String getUserName() {
@@ -85,11 +85,11 @@ public class User {
     }
 
     public Integer getDepartment_id() {
-        return department_id;
+        return departmentID;
     }
 
     public void setDepartment_id(Integer department_id) {
-        this.department_id = department_id;
+        this.departmentID = department_id;
     }
 
     public String getPhone() {
@@ -111,14 +111,8 @@ public class User {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("User{");
-        sb.append("user_id=").append(user_id);
         sb.append(", userName='").append(userName).append('\'');
         sb.append(", password='").append(password).append('\'');
-        sb.append(", avatar='").append(avatar).append('\'');
-        sb.append(", department_id=").append(department_id);
-        sb.append(", phone='").append(phone).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", userHeader=").append(userHeader);
         sb.append('}');
         return sb.toString();
     }
