@@ -65,7 +65,7 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
         indexBar = (SideBar) layout.findViewById(R.id.sideBar);
         indexBar.setTextView(mDialogText);
         layout_head = inflater.inflate(R.layout.layout_head_friend, null);
-        mClearEditText = (ClearEditText)layout_head.findViewById(R.id.et_msg_search);
+        mClearEditText = (ClearEditText)layout.findViewById(R.id.et_msg_search);
         lvContact.addHeaderView(layout_head);
     }
 
