@@ -5,10 +5,12 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wetalk.software.bupt.com.wetalk.presenter.ChatManagerPresenter;
+import wetalk.software.bupt.com.wetalk.application.ChatManager;
+import wetalk.software.bupt.com.wetalk.application.UserManager;
 import wetalk.software.bupt.com.wetalk.util.JsonUtil;
 import wetalk.software.bupt.com.wetalk.util.WeTalkConfig;
 import wetalk.software.bupt.com.wetalk.util.WeTalkLog;
+import wetalk.software.bupt.com.wetalk.util.WeTalkUtils;
 
 /**
  * Created by zhangjie on 2017/12/6.
@@ -156,7 +158,7 @@ public class WeTalkMsg extends WeTalkObject {
             WeTalkLog.i("parseMessage错误："+e.getMessage());
         }
         if(message!=null){
-            ChatManagerPresenter.getInstance(context).saveReceiveMessage(false,message);
+            ChatManager.getInstance(context).saveReceiveMessage(false,message);
         }
     }
 
@@ -174,7 +176,7 @@ public class WeTalkMsg extends WeTalkObject {
                 msg.getBelongId(), msg.getBelongUsername(), msg.getBelongAvatar(),
                 msg.getBelongNick(), msg.getMsgTime(), WeTalkConfig.TYPE_TEXT);
         if(message!=null){
-            ChatManagerPresenter.getInstance(context).saveReceiveMessage(false,message);
+            ChatManager.getInstance(context).saveReceiveMessage(false,message);
         }
     }
 
@@ -185,9 +187,10 @@ public class WeTalkMsg extends WeTalkObject {
                                       String username,String avatar,String nick,String msgTime,Integer msgtype){
         WeTalkMsg message=null;
         //登陆用户
-        BmobChatUser loginUser = BmobUserManager.getInstance(context).getCurrentUser();
-        if(loginUser!=null && loginUser.getObjectId().equals(toId)){//是当前登陆用户的消息
-            String loginId = loginUser.getObjectId();
+        ChatUser loginUser =  new ChatUser();
+
+        if(loginUser!=null && loginUser.getUserID().equals(toId)){//是当前登陆用户的消息
+            String loginId = String.valueOf(loginUser.getUserID());
             message = new WeTalkMsg(tag,belongId+"&"+loginId,
                     content,
                     loginId,
@@ -226,19 +229,19 @@ public class WeTalkMsg extends WeTalkObject {
      * @throws
      */
     @Deprecated
-    public static WeTalkMsg createTagSendMsg(Context context,MsgTag tag, String targetId,BmobChatUser currentUser){
+    public static WeTalkMsg createTagSendMsg(Context context,MsgTag tag, String targetId,ChatUser currentUser){
         String t="";
         if(tag == MsgTag.ADD_CONTACT){
             t = WeTalkConfig.TAG_ADD_CONTACT;
         }else if(tag==MsgTag.ADD_AGREE) {
             t=WeTalkConfig.TAG_ADD_AGREE;
         }
-        BmobChatUser user = BmobUserManager.getInstance(context).getCurrentUser();
+        ChatUser user = new ChatUser();
         WeTalkMsg msg = new WeTalkMsg(t,
-                targetId,user.getObjectId(),
-                user.getUsername(), user.getAvatar(),
+                targetId,String.valueOf(user.getUserID()),
+                user.getUserName(), user.getAvatar(),
                 user.getNick(),
-                String.valueOf(BmobUtils.getTimeStamp()),
+                String.valueOf(WeTalkUtils.getTimeStamp()),
                 WeTalkConfig.INVITE_ADD_NO_VALIDATION);
         return msg;
     }
@@ -253,10 +256,10 @@ public class WeTalkMsg extends WeTalkObject {
      * @return WeTalkMsg
      * @throws
      */
-    public static WeTalkMsg createTagSendMsg(Context context,String tag, String targetId,BmobChatUser currentUser){
-        BmobChatUser user = BmobUserManager.getInstance(context).getCurrentUser();
-        WeTalkMsg msg = new WeTalkMsg(tag, targetId,user.getObjectId(), user.getUsername(), user.getAvatar(), user.getNick(),
-                String.valueOf(BmobUtils.getTimeStamp()),
+    public static WeTalkMsg createTagSendMsg(Context context,String tag, String targetId,ChatUser currentUser){
+        ChatUser user =  new ChatUser();
+        WeTalkMsg msg = new WeTalkMsg(tag, targetId,String.valueOf(user.getUserID()), user.getUserName(), user.getAvatar(), user.getNick(),
+                String.valueOf(WeTalkUtils.getTimeStamp()),
                 WeTalkConfig.INVITE_ADD_NO_VALIDATION);
         return msg;
     }
@@ -303,17 +306,17 @@ public class WeTalkMsg extends WeTalkObject {
      * @throws
      */
     public static WeTalkMsg createSendMessage(final Context context,final String receiptId,String content,Integer status,Integer msgtype){
-        BmobChatUser loginUser = BmobUserManager.getInstance(context).getCurrentUser();
-        String loginId = loginUser.getObjectId();
+        ChatUser loginUser =  new ChatUser();
+        String loginId = String.valueOf(loginUser.getUserID());
         WeTalkMsg message = new WeTalkMsg("",loginId+"&"+receiptId,
                 content,
                 receiptId,
                 loginId,
-                loginUser.getUsername(),
+                loginUser.getUserName(),
                 loginUser.getAvatar()==null ? "" :
                         loginUser.getAvatar(),
                 loginUser.getNick(),
-                String.valueOf(BmobUtils.getTimeStamp()),
+                String.valueOf(WeTalkUtils.getTimeStamp()),
                 msgtype,
                 WeTalkConfig.STATE_UNREAD,
                 status);

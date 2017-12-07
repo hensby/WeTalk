@@ -1,4 +1,4 @@
-package wetalk.software.bupt.com.wetalk.presenter;
+package wetalk.software.bupt.com.wetalk.application;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -8,11 +8,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
-import wetalk.software.bupt.com.wetalk.application.WeTalkInvitation;
 import wetalk.software.bupt.com.wetalk.listener.FindListener;
 import wetalk.software.bupt.com.wetalk.listener.PushListener;
+import wetalk.software.bupt.com.wetalk.listener.SaveListener;
 import wetalk.software.bupt.com.wetalk.listener.SwitchListener;
 import wetalk.software.bupt.com.wetalk.listener.UploadFileListener;
 import wetalk.software.bupt.com.wetalk.listener.UploadListener;
@@ -22,7 +21,6 @@ import wetalk.software.bupt.com.wetalk.model.po.WeTalkConstant;
 import wetalk.software.bupt.com.wetalk.model.po.WeTalkFile;
 import wetalk.software.bupt.com.wetalk.model.po.WeTalkMsg;
 import wetalk.software.bupt.com.wetalk.util.WeTalkConfig;
-import wetalk.software.bupt.com.wetalk.util.WeTalkJsonUtil;
 import wetalk.software.bupt.com.wetalk.util.WeTalkLog;
 import wetalk.software.bupt.com.wetalk.util.WeTalkNetUtil;
 
@@ -30,23 +28,23 @@ import wetalk.software.bupt.com.wetalk.util.WeTalkNetUtil;
  * Created by zhangjie on 2017/12/6.
  */
 
-public class ChatManagerPresenter {
+public class ChatManager {
     //WeTalkPushManager<WeTalkChatInstallation> bmobPush;
 
     Context globalContext;
     // 创建private static类实例
-    private volatile static ChatManagerPresenter INSTANCE;
+    private volatile static ChatManager INSTANCE;
     // 同步锁
     private static Object INSTANCE_LOCK = new Object();
 
     /**
      * 使用单例模式创建--双重锁定
      */
-    public static ChatManagerPresenter getInstance(Context context) {
+    public static ChatManager getInstance(Context context) {
         if (INSTANCE == null)
             synchronized (INSTANCE_LOCK) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ChatManagerPresenter();
+                    INSTANCE = new ChatManager();
                 }
                 INSTANCE.init(context);
             }
@@ -413,7 +411,7 @@ public class ChatManagerPresenter {
                                         + msg.getContent());
                             }
                             msg.setIsReaded(WeTalkConfig.STATE_UNREAD_RECEIVED);
-                            WeTalkDB.create(globalContext).saveMessage(msg);
+                            //WeTalkDB.create(globalContext).saveMessage(msg);
                             uploadCallback.onSuccess();
                         }
 
@@ -462,7 +460,7 @@ public class ChatManagerPresenter {
     public void sendImageMessage(final ChatUser targetUser,final String localPath,String extra, String showAlert,final UploadListener uploadCallback){
         // 先构建一个可用于界面显示的msg对象：
         // 图片的话，刚开始存储的是本地地址（前面加file:///，用于显示本地图片），下载完成之后存储的是本地地址+"&"+网络后的地址,传送给对方的还是网络地址
-        final WeTalkMsg msg = WeTalkMsg.createSendMessage(globalContext,targetUser.getObjectId(), "file:///" + localPath,WeTalkConfig.STATUS_SEND_START, WeTalkConfig.TYPE_IMAGE);
+        final WeTalkMsg msg = WeTalkMsg.createSendMessage(globalContext, String.valueOf(targetUser.getUserID()), "file:///" + localPath,WeTalkConfig.STATUS_SEND_START, WeTalkConfig.TYPE_IMAGE);
         if(extra!=null && !extra.equals("")){
             msg.setExtra(extra);
         }
@@ -519,7 +517,7 @@ public class ChatManagerPresenter {
         StringBuilder content = new StringBuilder();
         content.append(localPath).append("&").append(length);
         final WeTalkMsg msg = WeTalkMsg.createSendMessage(globalContext,
-                targetUser.getObjectId(), content.toString(),
+                String.valueOf(targetUser.getUserID()),content.toString(),
                 WeTalkConfig.STATUS_SEND_START, WeTalkConfig.TYPE_VOICE);
         if(extra!=null && !extra.equals("")){
             msg.setExtra(extra);
@@ -595,13 +593,13 @@ public class ChatManagerPresenter {
         //发送的消息其都是已读状态的
         msg.setIsReaded(WeTalkConfig.STATE_READED);
         //保 存到本地消息表中
-        WeTalkDB.create(globalContext).saveMessage(msg);
+        /*WeTalkDB.create(globalContext).saveMessage(msg);
         // 保存到最近会话列表
         WeTalkRecent recent = new WeTalkRecent(targetUser.getObjectId(),
                 targetUser.getUsername(), targetUser.getNick(),
                 targetUser.getAvatar(), msg.getContent(),
                 Long.parseLong(msg.getMsgTime()), msg.getMsgType());
-        WeTalkDB.create(globalContext).saveRecent(recent);
+        WeTalkDB.create(globalContext).saveRecent(recent);*/
     }
 
     /** 获取指定会话id和时间的消息
@@ -612,9 +610,9 @@ public class ChatManagerPresenter {
      * @return WeTalkMsg
      * @throws
      */
-    public WeTalkMsg getMessage(final String conversionId, final String msgTime){
+    /*public WeTalkMsg getMessage(final String conversionId, final String msgTime){
         return WeTalkDB.create(globalContext).getMessage(conversionId, msgTime);
-    }
+    }*/
 
     /**
      * 保存收到的消息到本地,并根据isAskReaded来判断是否发送已读回执
@@ -627,7 +625,7 @@ public class ChatManagerPresenter {
     public void saveReceiveMessage(boolean isAskReaded, WeTalkMsg msg) {
         String convertId = msg.getConversationId();
         String toId = convertId.split("&")[1];// 这条消息是发送给谁的
-        String loginid = WeTalkUserManager.getInstance(globalContext).getCurrentUserObjectId();
+        /*String loginid = UserManager.getInstance(globalContext).getCurrentUserObjectId();
         //收到的消息全部是未读已收到状态
         msg.setIsReaded(WeTalkConfig.STATE_UNREAD_RECEIVED);
         WeTalkDB.create(globalContext, toId).saveMessage(msg);
@@ -642,7 +640,7 @@ public class ChatManagerPresenter {
             notifyTargetMsgReaded(msg.getBelongId(), loginid,msg.getConversationId(), msg.getMsgTime());
         }else{//不发送回执消息，也要更新WeTalkMsg表中的未读标示
             updateMsgReaded(true, msg.getBelongId(), msg.getMsgTime());
-        }
+        }*/
     }
 
     /** 保存从定时任务中取到的好友请求到本地，同时更新后台的未读标示
@@ -655,7 +653,7 @@ public class ChatManagerPresenter {
     public WeTalkInvitation saveReceiveInvite(WeTalkMsg msg){
         //保存好友请求消息
         WeTalkInvitation message =WeTalkInvitation.createReceiverInvitation(msg);
-        WeTalkDB.create(globalContext,msg.getToId()).saveInviteMessage(message);
+        //WeTalkDB.create(globalContext,msg.getToId()).saveInviteMessage(message);
         //已读消息发送成功之后更新该条消息的读取状态为已读
         updateMsgReaded(true,msg.getBelongId(), msg.getMsgTime());
         return message;
@@ -672,7 +670,7 @@ public class ChatManagerPresenter {
     public WeTalkInvitation saveReceiveInvite(String json,String toId){
         WeTalkInvitation message =WeTalkInvitation.createReceiverInvitation(json);
         //保存好友请求消息
-        WeTalkDB.create(globalContext,toId).saveInviteMessage(message);
+        //WeTalkDB.create(globalContext,toId).saveInviteMessage(message);
         //已读消息发送成功之后更新该条消息的读取状态为已读
         updateMsgReaded(true,message.getFromid(),String.valueOf(message.getTime()));
         return message;
@@ -777,7 +775,7 @@ public class ChatManagerPresenter {
      * @throws
      */
     public void updateMsgStatus(String conversionId, String msgTime) {
-        WeTalkDB.create(globalContext).updateTargetMsgStatus(WeTalkConfig.STATUS_SEND_RECEIVERED,conversionId, msgTime);
+        //WeTalkDB.create(globalContext).updateTargetMsgStatus(WeTalkConfig.STATUS_SEND_RECEIVERED,conversionId, msgTime);
     }
 
     /**
@@ -789,7 +787,7 @@ public class ChatManagerPresenter {
      * @throws
      */
     private void insertMessage(final WeTalkMsg msg) {
-        msg.save(globalContext, new SaveListener() {
+        /*msg.save(globalContext, new SaveListener() {
 
             @Override
             public void onSuccess() {
@@ -802,7 +800,7 @@ public class ChatManagerPresenter {
                 // TODO Auto-generated method stub
                 WeTalkLog.i("保存到服务器失败：" + arg1);
             }
-        });
+        });*/
     }
 
     /** 更新指定的WeTalkMsg的未读状态
@@ -829,7 +827,7 @@ public class ChatManagerPresenter {
                 if(arg0!=null && arg0.size()>0){
                     final WeTalkMsg message = new WeTalkMsg();
                     message.setIsReaded(WeTalkConfig.STATE_READED);
-                    message.update(globalContext, arg0.get(0).getObjectId(), new UpdateListener() {
+                    /*message.update(globalContext, arg0.get(0).getObjectId(), new UpdateListener() {
 
                         @Override
                         public void onSuccess() {
@@ -842,7 +840,7 @@ public class ChatManagerPresenter {
                             // TODO Auto-generated method stub
                             WeTalkLog.i("已读状态更新失败：arg1"+arg1);
                         }
-                    });
+                    });*/
                 }else{
                     WeTalkLog.i("未查询到指定的未读消息");
                 }
@@ -861,14 +859,14 @@ public class ChatManagerPresenter {
      * @throws
      */
     private void queryMsg(boolean hasTag,final String value, final String msgTime,FindListener<WeTalkMsg> findCallback){
-        WeTalkQuery<WeTalkMsg> query = new WeTalkQuery<WeTalkMsg>();
+        /*WeTalkQuery<WeTalkMsg> query = new WeTalkQuery<WeTalkMsg>();
         if(!hasTag){//是否是tag消息
             query.addWhereEqualTo("conversationId", value);
         }else{
             query.addWhereEqualTo("belongId", value);
         }
         query.addWhereEqualTo("msgTime", msgTime);
-        query.findObjects(globalContext, findCallback);
+        query.findObjects(globalContext, findCallback);*/
     }
 
 
@@ -883,10 +881,10 @@ public class ChatManagerPresenter {
      */
     public void queryTargetMsg(String fromId,String msgTime,FindListener<WeTalkMsg> findCallBack){
         //消息发送方的信息
-        WeTalkQuery<WeTalkMsg> query = new WeTalkQuery<WeTalkMsg>();
+        /*WeTalkQuery<WeTalkMsg> query = new WeTalkQuery<WeTalkMsg>();
         query.addWhereEqualTo("ObjectId", fromId);
         query.addWhereEqualTo("msgTime", msgTime);
-        query.findObjects(globalContext,findCallBack);
+        query.findObjects(globalContext,findCallBack);*/
     }
 
     /** 给指定用户发送Json格式的消息，提供回调方法--用于扩展MsgTag，发送自定义格式的消息，这个格式可以随便定义，只负责发送消息，不提供自定义格式的消息的处理
@@ -995,7 +993,7 @@ public class ChatManagerPresenter {
             public void onSuccess(List<ChatUser> arg0) {
                 // TODO Auto-generated method stub
                 if (arg0 != null && arg0.size() > 0) {
-                    final WeTalkMsg msg = WeTalkMsg.createTagSendMsg(globalContext, tag, targetId, WeTalkUserManager.getInstance(globalContext).getCurrentUser());
+                    /*final WeTalkMsg msg = WeTalkMsg.createTagSendMsg(globalContext, tag, targetId, WeTalkUserManager.getInstance(globalContext).getCurrentUser());
                     JSONObject jsontag = createTagMessage(msg);
                     send(arg0.get(0), jsontag, new PushListener() {
 
@@ -1012,7 +1010,7 @@ public class ChatManagerPresenter {
                             // TODO Auto-generated method stub
                             pushCallback.onFailure(arg0, arg1);
                         }
-                    });
+                    });*/
                 } else {
                     WeTalkLog.i("sendTagMessage---> onSuccess():未查询到指定"+ targetId + "的用户");
                 }
@@ -1072,7 +1070,7 @@ public class ChatManagerPresenter {
             public void onSuccess(List<ChatUser> arg0) {
                 // TODO Auto-generated method stub
                 if (arg0 != null && arg0.size() > 0) {
-                    final WeTalkMsg msg = WeTalkMsg.createTagSendMsg(globalContext, tag, targetId, WeTalkUserManager.getInstance(globalContext).getCurrentUser());
+                    /*final WeTalkMsg msg = WeTalkMsg.createTagSendMsg(globalContext, tag, targetId, WeTalkUserManager.getInstance(globalContext).getCurrentUser());
                     JSONObject jsontag = createTagMessage(msg);
                     send(arg0.get(0), jsontag, new PushListener() {
 
@@ -1089,7 +1087,7 @@ public class ChatManagerPresenter {
                             // TODO Auto-generated method stub
                             pushCallback.onFailure(arg0, arg1);
                         }
-                    });
+                    });*/
                 } else {
                     WeTalkLog.i("sendTagMessage---> onSuccess():未查询到指定"+ targetId + "的用户");
                 }
@@ -1118,14 +1116,14 @@ public class ChatManagerPresenter {
     private void send(ChatUser user, JSONObject json,PushListener pushCallback) {
         String installationId = user.getInstallId();
         String deviceType = user.getDeviceType();
-        WeTalkQuery<WeTalkChatInstallation> query = WeTalkInstallation.getQuery();
+        /*WeTalkQuery<WeTalkChatInstallation> query = WeTalkInstallation.getQuery();
         if (deviceType != null && deviceType.equals("ios")) {
             query.addWhereEqualTo("deviceToken", installationId);
         } else {
             query.addWhereEqualTo("installationId", installationId);
         }
         bmobPush.setQuery(query);
-        bmobPush.pushMessage(json, pushCallback);
+        bmobPush.pushMessage(json, pushCallback);*/
     }
 
     /**
@@ -1182,7 +1180,7 @@ public class ChatManagerPresenter {
      */
     private void switchLarget2Short(String netUrl, final SwitchListener listener) {
         String url = "http://s.bmob.cn/create.php?url=" + netUrl;
-        Volley.newRequestQueue(globalContext).add(
+        /*Volley.newRequestQueue(globalContext).add(
                 new JsonObjectRequest(Request.Method.GET, url, "",
                         new Response.Listener<JSONObject>() {
 
@@ -1203,7 +1201,7 @@ public class ChatManagerPresenter {
                         // TODO Auto-generated method stub
                         listener.onError(error.getMessage());
                     }
-                }));
+                }));*/
     }
 
 
@@ -1213,7 +1211,7 @@ public class ChatManagerPresenter {
      * @return
      * @throws
      */
-    public void createReceiveMsg(String json,final OnReceiveListener receiveCallBack){
+    /*public void createReceiveMsg(String json,final OnReceiveListener receiveCallBack){
         JSONObject jo;
         try {
             jo = new JSONObject(json);
@@ -1291,7 +1289,7 @@ public class ChatManagerPresenter {
      * @return int
      * @throws
      */
-    public int getAllUnReadCount(){
+    /*public int getAllUnReadCount(){
         return WeTalkDB.create(globalContext).getAllUnReadCount();
-    }
+    }*/
 }

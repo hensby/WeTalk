@@ -26,12 +26,10 @@ import java.util.List;
 
 import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.application.ImageLoadOptions;
-import wetalk.software.bupt.com.wetalk.model.po.FailReason;
 import wetalk.software.bupt.com.wetalk.model.po.WeTalkMsg;
 import wetalk.software.bupt.com.wetalk.util.FaceTextUtils;
 import wetalk.software.bupt.com.wetalk.util.TimeUtil;
 import wetalk.software.bupt.com.wetalk.util.WeTalkConfig;
-import wetalk.software.bupt.com.wetalk.view.ViewHolder;
 import wetalk.software.bupt.com.wetalk.view.activity.ImageBrowserActivity;
 import wetalk.software.bupt.com.wetalk.view.activity.LocationActivity;
 import wetalk.software.bupt.com.wetalk.view.activity.UserInfoActivity;

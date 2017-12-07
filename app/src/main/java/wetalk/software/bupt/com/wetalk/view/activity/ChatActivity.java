@@ -41,10 +41,10 @@ import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.adapter.EmoViewPagerAdapter;
 import wetalk.software.bupt.com.wetalk.adapter.EmoteAdapter;
 import wetalk.software.bupt.com.wetalk.adapter.MessageChatAdapter;
+import wetalk.software.bupt.com.wetalk.application.ChatManager;
 import wetalk.software.bupt.com.wetalk.model.po.ChatUser;
 import wetalk.software.bupt.com.wetalk.model.po.FaceText;
 import wetalk.software.bupt.com.wetalk.model.po.WeTalkConstant;
-import wetalk.software.bupt.com.wetalk.presenter.ChatManagerPresenter;
 import wetalk.software.bupt.com.wetalk.util.CommonUtils;
 import wetalk.software.bupt.com.wetalk.util.FaceTextUtils;
 import wetalk.software.bupt.com.wetalk.view.viewinter.EmoticonsEditText;
@@ -80,7 +80,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
     private ViewPager pager_emo;
 
     private TextView tv_picture, tv_camera, tv_location;
-    private ChatManagerPresenter manager;
+    private ChatManager manager;
     protected HeaderLayout mHeaderLayout;
 
     // 语音有关
@@ -97,7 +97,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        manager = ChatManagerPresenter.getInstance(this);
+        manager = ChatManager.getInstance(this);
         MsgPagerNum = 0;
         // 组装聊天对象
         targetUser = (ChatUser) getIntent().getSerializableExtra("user");

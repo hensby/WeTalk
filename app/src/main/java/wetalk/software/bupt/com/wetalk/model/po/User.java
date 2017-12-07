@@ -1,5 +1,7 @@
 package wetalk.software.bupt.com.wetalk.model.po;
 
+import android.content.Context;
+
 /**
  * Created by ww on 2017/12/2.
  */
@@ -56,7 +58,7 @@ public class User {
         return userID;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserId(Integer userid) {
         this.userID = userid;
     }
 
@@ -121,6 +123,10 @@ public class User {
         sb.append(", userHeader=").append(userHeader);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static <T> T getCurrentUser(Context context, Class<T> arg0) {
+        return null;
     }
 }
 

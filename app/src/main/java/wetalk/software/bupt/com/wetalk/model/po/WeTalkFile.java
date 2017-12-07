@@ -50,7 +50,7 @@ public class WeTalkFile implements Serializable{
     }
 
     public void upload(final Context context, final UploadFileListener listener) {
-        if(file.length() > (long)maxWeTalkFileSize_block) {
+        /*if(file.length() > (long)maxWeTalkFileSize_block) {
             listener.postOnFailure(9007, "WeTalkFile File size must be less than 200M.");
         } else if(!file.exists()) {
             listener.postOnFailure(9008, "WeTalkFile File does not exist.");
@@ -83,7 +83,7 @@ public class WeTalkFile implements Serializable{
                     })).i();
                 }
             }).start();
-        }
+        }*/
     }
 
     public void uploadblock(final Context context, final UploadFileListener listener) {
