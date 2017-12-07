@@ -1,4 +1,4 @@
-package wetalk.software.bupt.com.wetalk.view;
+package wetalk.software.bupt.com.wetalk.util;
 
 import android.util.SparseArray;
 import android.view.View;

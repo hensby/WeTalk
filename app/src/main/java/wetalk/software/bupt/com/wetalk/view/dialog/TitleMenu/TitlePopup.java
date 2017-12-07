@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import wetalk.software.bupt.com.wetalk.R;
-import wetalk.software.bupt.com.wetalk.view.ViewHolder;
+import wetalk.software.bupt.com.wetalk.util.ViewHolder;
 
 /**
  * Created by Administrator on 2017/12/5.

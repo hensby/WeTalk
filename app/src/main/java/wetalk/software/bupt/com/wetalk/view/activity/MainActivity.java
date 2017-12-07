@@ -22,7 +22,7 @@ import wetalk.software.bupt.com.wetalk.view.fragment.Fragment_Profile;
 
 public class MainActivity extends AppCompatActivity {
     private TextView txt_title;
-    private RelativeLayout rv_img_right;
+    private RelativeLayout rvImgRight;//右上角加号布局,可设置可见性
     private TextView unreaMsgdLabel;// 未读消息textview
     private TextView unreadAddressLable;// 未读通讯录textview
     private Fragment[] fragments;
@@ -46,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTitle(){
         txt_title = (TextView) findViewById(R.id.txt_title);
-        rv_img_right=(RelativeLayout) findViewById(R.id.rv_img_right);
+        rvImgRight=(RelativeLayout) findViewById(R.id.rv_img_right);
+        rvImgRight.setVisibility(View.VISIBLE);
         txt_title.setText("会话");
-        rv_img_right.setOnClickListener(new View.OnClickListener(){
+        rvImgRight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 titlePopup.show(findViewById(R.id.layout_bar));
@@ -90,16 +91,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.re_weixin:
                 index=0;
                 txt_title.setText("会话");
+                rvImgRight.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.re_contact_list:
                 index=1;
                 txt_title.setText("通讯录");
+                rvImgRight.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.re_profile:
                 index=2;
                 txt_title.setText("我");
+                rvImgRight.setVisibility(View.GONE);
                 break;
         }
         if(currentIndex!=index){

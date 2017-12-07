@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <include android:id="@+id/layout_search" layout="@layout/layout_head_search"/>
     <LinearLayout
         android:id="@+id/layout_addfriend"
         style="@style/MMListItem"
@@ -20,7 +19,7 @@
             android:textColor="@color/black"
             android:text="@string/recommended_friends"
             android:layout_marginLeft="10dp"
-            android:singleLine="true" />
+             />
 
     </LinearLayout>
 
@@ -44,7 +43,7 @@
             android:textColor="@color/black"
             android:text="@string/group_chats"
             android:layout_marginLeft="10dp"
-            android:singleLine="true" />
+            />
     </LinearLayout>
 
     <View

@@ -1,4 +1,4 @@
-package wetalk.software.bupt.com.wetalk.view.viewinter;
+package wetalk.software.bupt.com.wetalk.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -72,7 +72,7 @@ public class SideBar extends View {
                 break;
             case MotionEvent.ACTION_MOVE: {//当类型为移动
                 int vi = (int) ((y / (float) getHeight()) * (float) chars.length);////获取具体按下哪个字母
-                if(vi>=0){
+                if(vi>=0&&vi<=25){
                     this.mdialog.setText(chars[vi]);////设置弹出文本
                     this.changelistener.onTextChange(this.mdialog.getText().toString());//通知ListView
                     break;
