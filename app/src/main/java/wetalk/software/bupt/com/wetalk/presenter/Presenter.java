@@ -3,9 +3,9 @@ package wetalk.software.bupt.com.wetalk.presenter;
 import android.content.Context;
 import android.os.Handler;
 
-import wetalk.software.bupt.com.wetalk.model.ModelInter;
+import wetalk.software.bupt.com.wetalk.model.UserModelInter;
 import wetalk.software.bupt.com.wetalk.model.OnLoginListener;
-import wetalk.software.bupt.com.wetalk.model.impl.ModelImp;
+import wetalk.software.bupt.com.wetalk.model.impl.UserModelImp;
 import wetalk.software.bupt.com.wetalk.model.po.User;
 import wetalk.software.bupt.com.wetalk.view.viewinter.ViewInter;
 
@@ -17,11 +17,11 @@ public class Presenter {
     //view层的控件，对view层进行操作
     ViewInter viewInter;
     //模型层的控件,对model层进行操作
-    ModelInter modelInter;
+    UserModelInter modelInter;
 
     public Presenter(ViewInter viewInter, Context context) {
         this.viewInter = viewInter;
-        modelInter = new ModelImp(context);
+        modelInter = new UserModelImp(context);
     }
     /**
      * 清除功能

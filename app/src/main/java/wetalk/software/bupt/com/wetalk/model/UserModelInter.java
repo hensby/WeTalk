@@ -4,7 +4,7 @@ package wetalk.software.bupt.com.wetalk.model;
  * Created by Administrator on 2017/11/30 0030.
  * 所有数据处理操作功能都定义在这个接口中，方便扩展
  */
-public interface ModelInter {
+public interface UserModelInter {
     /**
      * 注册操作
      *
