@@ -1,5 +1,7 @@
 package wetalk.software.bupt.com.wetalk.model.po;
 
+import android.content.Context;
+
 /**
  * Created by ww on 2017/12/2.
  */
@@ -13,8 +15,15 @@ public class User {
     private String phone;
     private String email;
     private int userHeader;
-    public User(){
 
+    public User(){
+        this.userID = (int)(Math.random()*10+1);
+        this.userName = "test";
+        this.password = "test";
+        this.avatar = "";
+        this.departmentID = (int)(Math.random()*10+1);
+        this.phone = "112233344";
+        this.email = "test@qq.com";
     }
     public User(Integer userid,String username,String password,String avatar,Integer departmentid
             ,String phone,String email){
@@ -52,11 +61,11 @@ public class User {
         this.userHeader = userHeader;
     }
 
-    public Integer getUserid() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserId(Integer userid) {
         this.userID = userid;
     }
 
@@ -121,6 +130,10 @@ public class User {
         sb.append(", userHeader=").append(userHeader);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static <T> T getCurrentUser(Context context, Class<T> arg0) {
+        return null;
     }
 }
 
