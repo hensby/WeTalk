@@ -29,11 +29,11 @@ import wetalk.software.bupt.com.wetalk.widget.ClearEditText;
 import wetalk.software.bupt.com.wetalk.widget.SideBar;
 
 /**
- * Created by Administrator on 2017/11/29.
+ * 通讯录Fragment
  */
 
 public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChange,
-        View.OnClickListener, AdapterView.OnItemClickListener{
+        View.OnClickListener{
     private View layout, layout_head;
     private ListView lvContact;
     private SideBar indexBar;
@@ -70,29 +70,6 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
     }
 
 
-    @Override
-    public void onTextChange(String s) {
-        for (int i = 0; i < userList.size(); i++) {
-                User user = userList.get(i);//获取user信息
-            String catalog = PinYinUtil.converterToFirstSpell(user.getUserName())
-                    .substring(0, 1);
-
-            if (catalog!= null && catalog.equals(s)) {//判断首字母不为空，并且首字母与弹出TextView字符串相等
-                Log.d("TAG",user.getUserName());
-                final int finalI = i;
-                lvContact.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        lvContact.requestFocusFromTouch();//获取焦点
-                        lvContact.setSelection(finalI+1);//跳转到该首字母的item
-                    }
-                });
-                adapter.notifyDataSetChanged();//更新ListView
-                break;
-            }
-
-        }
-    }
 
     private void initData(){
         String[] name={"张三","李四","王二","麻子","快递员","申通","建设银行","圆通","阿里巴巴","百度","腾讯","华为","菜鸟","滴滴","饿了么","飞猪","京东","今日头条"};
@@ -109,47 +86,67 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
         lvContact.setAdapter(adapter);
     }
 
+    /**
+     * 设置监听器
+     */
     private void setOnListener() {
-        lvContact.setOnItemClickListener(this);
+        //设置好友目录的子项点击事件
+        lvContact.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position-1>=0){
+                    User user=userList.get(position-1);
+                    UserInfoActivity.actionStart(getActivity(),user);
+                }
+            }
+        });
+        //设置侧边栏的点击事件
         indexBar.setOnTextViewChange(this);
+        //设置添加好友的点击事件
         layout_head.findViewById(R.id.layout_addfriend).setOnClickListener(this);
+        //设置群聊的点击事件
         layout_head.findViewById(R.id.layout_group).setOnClickListener(this);
+        //设置搜索框的文本改变事件
         mClearEditText.addTextChangedListener(new TextWatcher() {
-
             @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
-            }
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {filterData(s.toString());}
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
+    /**
+     * 侧边栏的文本改变事件
+     */
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(position-1>=0){
-            User user=userList.get(position-1);
-            UserInfoActivity.actionStart(getActivity(),user);
+    public void onTextChange(String s) {
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);//获取user信息
+            String catalog = PinYinUtil.converterToFirstSpell(user.getUserName()).substring(0, 1);
+
+            if (catalog!= null && catalog.equals(s)) {//判断首字母不为空，并且首字母与弹出TextView字符串相等
+                final int finalI = i;
+                lvContact.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvContact.requestFocusFromTouch();//获取焦点
+                        lvContact.setSelection(finalI+1);//跳转到该首字母的item
+                    }
+                });
+                adapter.notifyDataSetChanged();//更新ListView
+                break;
+            }
         }
     }
 
+    /**
+     *添加好友与群聊的点击事件
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.layout_search:// 搜索好友
-//                Utils.start_Activity(getActivity(), SearchActivity.class);
-//                break;
 //            case R.id.layout_addfriend:// 添加好友
 //                Utils.start_Activity(getActivity(), NewFriendsListActivity.class);
 //                break;
@@ -161,6 +158,9 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
         }
     }
 
+    /**
+     * 搜索框文本改变事件
+     */
     private void filterData(String filterStr) {
         List<User> filterDateList = new ArrayList<>();
         if (TextUtils.isEmpty(filterStr)) {

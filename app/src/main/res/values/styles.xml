@@ -217,5 +217,20 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    
+    <!--发消息按钮样式-->
+    <style name="SendMessageBtn">
+        <item name="android:background">@drawable/btn_shape</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--删除好友按钮样式-->
+    <style name="DelFriBtn">
+        <item name="android:background">@drawable/btn_shape_2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 </resources>
