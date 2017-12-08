@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/wetalk/software/bupt/com/wetalk/adapter/MessageRecentAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/wetalk/software/bupt/com/wetalk/view/fragment/FragmentBase.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/wetalk/software/bupt/com/wetalk/view/fragment/Fragment_Msg.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/wetalk/software/bupt/com/wetalk/widget/ClearEditText.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_recent.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/item_conversation.xml" charset="GBK" />
   </component>
 </project>

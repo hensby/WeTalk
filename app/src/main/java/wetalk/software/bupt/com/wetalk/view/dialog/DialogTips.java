@@ -37,14 +37,14 @@ public class DialogTips extends DialogBase {
 		super.setCancel(false);
 	}
 	
-	public DialogTips(Context context, String message, String buttonText, String negetiveText, String title, boolean isCancel) {
+	public DialogTips(Context context, int message, String buttonText, String negetiveText, boolean title, boolean isCancel) {
 		super(context);
-		super.setMessage(message);
+	//	super.setMessage(message);
 		super.setNamePositiveButton(buttonText);
 		this.hasNegative=false;
 		super.setNameNegativeButton(negetiveText);
 		this.hasTitle = true;
-		super.setTitle(title);
+	//	super.setTitle(title);
 		super.setCancel(isCancel);
 	}
 

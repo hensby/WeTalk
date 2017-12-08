@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
      * 获取未读消息数
      */
     public void updateUnreadLabel() {
-        int count = 7;
+        int count = 99;
 //        count = EMChatManager.getInstance().getUnreadMsgsCount();
         if (count > 0) {
             unreaMsgdLabel.setText(String.valueOf(count));

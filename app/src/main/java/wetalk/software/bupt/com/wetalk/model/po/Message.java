@@ -13,6 +13,7 @@ public class Message {
     private int session_id;
     private int user_id;
     private int to_id;
+    private String friend_avator;
     private String content;
     private int content_type;
     private int content_isRead;
@@ -67,6 +68,14 @@ public class Message {
 
     public void setTo_id(int to_id) {
         this.to_id = to_id;
+    }
+
+    public String getFriend_avator() {
+        return friend_avator;
+    }
+
+    public void setFriend_avator(String friend_avator) {
+        this.friend_avator = friend_avator;
     }
 
     public String getContent() {

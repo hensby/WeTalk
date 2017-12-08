@@ -65,9 +65,9 @@ public class LoginActivity extends AppCompatActivity implements ViewInter {
 
                 } else {
                     presenter.login();
-                    Intent intent = new Intent();
-                    intent.setClass(LoginActivity.this, MainActivity.class);
-                    LoginActivity.this.startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(LoginActivity.this, MainActivity.class);
+//                    LoginActivity.this.startActivity(intent);
                 }
 
             }
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements ViewInter {
 
     @Override
     public void failHint(User user,String tag) {
-         Toast.makeText(this,"用户" + user.getUserName() + tag + "失败,密码或账号不正确，maybe not this user",Toast.LENGTH_LONG).show();
+         Toast.makeText(this,"用户" + user.getUserName() + tag + "失败,密码或账号不正确,请重试",Toast.LENGTH_LONG).show();
 //        AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
 //        dialog.setTitle("警告");
 //        dialog.setMessage("登录失败\n密码或账号不正确");

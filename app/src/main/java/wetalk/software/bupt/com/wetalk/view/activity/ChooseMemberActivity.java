@@ -120,6 +120,8 @@ public class ChooseMemberActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                //TODO 需要在intent加入user
+                // intent.putExtra()
                 intent.setClass(ChooseMemberActivity.this, ChatActivity.class);
                 ChooseMemberActivity.this.startActivity(intent);
             }

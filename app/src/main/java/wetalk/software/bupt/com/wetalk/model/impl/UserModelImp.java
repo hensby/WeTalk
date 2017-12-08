@@ -1,21 +1,24 @@
 package wetalk.software.bupt.com.wetalk.model.impl;
 
 import android.content.Context;
+import android.content.Intent;
 
-import wetalk.software.bupt.com.wetalk.model.ModelInter;
+import wetalk.software.bupt.com.wetalk.model.UserModelInter;
 import wetalk.software.bupt.com.wetalk.model.OnLoginListener;
 import wetalk.software.bupt.com.wetalk.model.dao.UserDao;
 import wetalk.software.bupt.com.wetalk.model.dao.impl.ImplUserDao;
 import wetalk.software.bupt.com.wetalk.model.po.User;
+import wetalk.software.bupt.com.wetalk.view.activity.LoginActivity;
+import wetalk.software.bupt.com.wetalk.view.activity.MainActivity;
 
 
-
-public class ModelImp implements ModelInter {
+public class UserModelImp implements UserModelInter {
     //获取数据库管理类，对数据库进行操作
     private UserDao userDao;
-
-    public ModelImp(Context context){
+    private Context context;
+    public UserModelImp(Context context){
         userDao = new ImplUserDao(context);
+        this.context=context;
     }
 
     /**
@@ -49,6 +52,9 @@ public class ModelImp implements ModelInter {
         //判断是否登录成功
         if(userDao.isLoginSuccessWithJson(user)){
             listener.loginSuccess(user);
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+
         }else{
             listener.loginFail(user);
         }
