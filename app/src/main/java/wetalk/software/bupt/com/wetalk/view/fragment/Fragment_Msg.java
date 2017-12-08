@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,23 +29,20 @@ import wetalk.software.bupt.com.wetalk.view.activity.ChatActivity;
   * @date 2014-6-7 下午1:01:37
   */
 public class Fragment_Msg extends Fragment implements OnItemClickListener,OnItemLongClickListener{
-	private View layout;
-	private LayoutInflater inflater;
 	MessageRecentAdapter adapter;
-//	private Context context;
 	private List<RecentContacts> recentContacts = new ArrayList<>();
-//	Date lastMessage;
 	ListView listview;
-	Date date;
+
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){
+
 		View view = inflater.inflate(R.layout.fragment_recent, container, false);
-		RecentContacts re = new RecentContacts(R.drawable.head,"wanfn","fdasfd",453732576);
+		RecentContacts re = new RecentContacts(R.mipmap.a1,"王恒超","你干嘛?",new SimpleDateFormat("HH:mm").format(new Date()));
 		recentContacts.add(re);
 		listview = (ListView)view.findViewById(R.id.list);
 		listview.setOnItemClickListener(this);
 		listview.setOnItemLongClickListener(this);
-		adapter = new MessageRecentAdapter(getActivity(), R.layout.item_conversation, recentContacts);
+		adapter = new MessageRecentAdapter(getActivity(),recentContacts);
 		listview.setAdapter(adapter);
 		return view;
 	}

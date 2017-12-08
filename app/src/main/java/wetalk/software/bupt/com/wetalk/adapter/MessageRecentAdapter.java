@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,22 +22,38 @@ import wetalk.software.bupt.com.wetalk.model.po.RecentContacts;
 
 
 
-public class MessageRecentAdapter extends ArrayAdapter<RecentContacts>{
-	private int resourceId;
+public class MessageRecentAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private List<RecentContacts> mData;
-    Date date;
     private Context mContext;
 	
-	public MessageRecentAdapter(Context context, int textViewResourceId, List<RecentContacts> objects) {
-		super(context, textViewResourceId, objects);
+	public MessageRecentAdapter(Context context, List<RecentContacts> objects) {
         inflater = LayoutInflater.from(context);
-        this.mContext = context;
+        mContext = context;
         mData = objects;
 
 	}
 
-	@Override
+    public MessageRecentAdapter() {
+        super();
+    }
+
+    @Override
+    public int getCount() {
+        return mData.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 //		RecentContacts recentContacts = getItem(position);//获取当前的MessageRecent实例
 //		View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
@@ -56,7 +73,7 @@ public class MessageRecentAdapter extends ArrayAdapter<RecentContacts>{
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_conversation, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.iv_recent_avatar = (ImageView)convertView.findViewById(R.id.iv_avatar);
+            viewHolder.iv_recent_avatar = (ImageView)convertView.findViewById(R.id.iv_recent_avatar);
             viewHolder.tv_recent_name = (TextView) convertView.findViewById(R.id.tv_recent_name);
             viewHolder.tv_recent_msg = (TextView) convertView.findViewById(R.id.tv_recent_msg);
             viewHolder.tv_recent_time = (TextView) convertView.findViewById(R.id.tv_recent_time);
@@ -71,10 +88,10 @@ public class MessageRecentAdapter extends ArrayAdapter<RecentContacts>{
 //        TextView tv_recent_time = ViewHolder.get(convertView, R.id.tv_recent_time);
 //        TextView tv_recent_unread = ViewHolder.get(convertView, R.id.tv_recent_unread);
 
-//        viewHolder.iv_recent_avatar.setImageResource(item.getContacts_avator());
-        viewHolder.tv_recent_name.setText(item.getContacts_name());
-        viewHolder.tv_recent_msg.setText(item.getLastmessage());
-//        viewHolder. tv_recent_time.setText((int) item.getLastContacts_time());
+        viewHolder.iv_recent_avatar.setImageResource(item.getContactsImgId());
+        viewHolder.tv_recent_name.setText(item.getContactsName());
+        viewHolder.tv_recent_msg.setText(item.getLastMessage());
+        viewHolder. tv_recent_time.setText(item.getLastContactsTime());
 //        viewHolder.tv_recent_unread.setText("[未读]");
         return convertView;
     }
