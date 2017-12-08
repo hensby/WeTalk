@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -34,8 +35,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EventListener;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.adapter.EmoViewPagerAdapter;
@@ -45,6 +49,7 @@ import wetalk.software.bupt.com.wetalk.application.ChatManager;
 import wetalk.software.bupt.com.wetalk.model.po.ChatUser;
 import wetalk.software.bupt.com.wetalk.model.po.FaceText;
 import wetalk.software.bupt.com.wetalk.model.po.WeTalkConstant;
+import wetalk.software.bupt.com.wetalk.model.po.WeTalkMsg;
 import wetalk.software.bupt.com.wetalk.util.CommonUtils;
 import wetalk.software.bupt.com.wetalk.util.FaceTextUtils;
 import wetalk.software.bupt.com.wetalk.view.viewinter.EmoticonsEditText;
@@ -101,6 +106,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         MsgPagerNum = 0;
         // 组装聊天对象
         targetUser = (ChatUser) getIntent().getSerializableExtra("user");
+        if(targetUser==null) targetUser=new ChatUser(11011,"zhangjie","zhangjie","",1,"15600992328","zx.zhangjie@qq.com");
         targetId = String.valueOf(targetUser.getUserID());
         //BmobLog.i("聊天对象：" + targetUser.getUserName() + ",targetId = "
 //				+ targetId);
@@ -378,10 +384,131 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
      * 加载消息历史，从数据库中读出
      */
 
-    /**private List<BmobMsg> initMsgData() {
-     List<BmobMsg> list = BmobDB.create(this).queryMessages(targetId,MsgPagerNum);
-     return list;
-     }*/
+    private List<WeTalkMsg> initMsgData() {
+        //List<WeTalkMsg> list = BmobDB.create(this).queryMessages(targetId, MsgPagerNum);
+        List<WeTalkMsg> list=new List<WeTalkMsg>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<WeTalkMsg> iterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @NonNull
+            @Override
+            public <T> T[] toArray(@NonNull T[] ts) {
+                return null;
+            }
+
+            @Override
+            public boolean add(WeTalkMsg weTalkMsg) {
+                return false;
+            }
+
+            @Override
+            public boolean remove(Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends WeTalkMsg> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int i, @NonNull Collection<? extends WeTalkMsg> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> collection) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public WeTalkMsg get(int i) {
+                return null;
+            }
+
+            @Override
+            public WeTalkMsg set(int i, WeTalkMsg weTalkMsg) {
+                return null;
+            }
+
+            @Override
+            public void add(int i, WeTalkMsg weTalkMsg) {
+
+            }
+
+            @Override
+            public WeTalkMsg remove(int i) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(Object o) {
+                return 0;
+            }
+
+            @Override
+            public int lastIndexOf(Object o) {
+                return 0;
+            }
+
+            @Override
+            public ListIterator<WeTalkMsg> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<WeTalkMsg> listIterator(int i) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public List<WeTalkMsg> subList(int i, int i1) {
+                return null;
+            }
+        };
+        return list;
+    }
 
     /**
      * 界面刷新
@@ -392,8 +519,9 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
      * @throws
      */
     private void initOrRefresh() {
-        /*if (mAdapter != null) {
-            if (MyMessageReceiver.mNewNum != 0) {// 用于更新当在聊天界面锁屏期间来了消息，这时再回到聊天页面的时候需要显示新来的消息
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+            /*if (MyMessageReceiver.mNewNum != 0) {// 用于更新当在聊天界面锁屏期间来了消息，这时再回到聊天页面的时候需要显示新来的消息
                 int news=  MyMessageReceiver.mNewNum;//有可能锁屏期间，来了N条消息,因此需要倒叙显示在界面上
                 int size = initMsgData().size();
                 for(int i=(news-1);i>=0;i--){
@@ -402,11 +530,11 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
                 mListView.setSelection(mAdapter.getCount() - 1);
             } else {
                 mAdapter.notifyDataSetChanged();
-            }
+            }*/
         } else {
             mAdapter = new MessageChatAdapter(this, initMsgData());
             mListView.setAdapter(mAdapter);
-        }*/
+        }
     }
 
     private void initAddView() {
@@ -773,12 +901,12 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
                     // return;
                 }
                 // 组装BmobMessage对象
-                /*BmobMsg message = BmobMsg.createTextSendMsg(this, targetId, msg);
-                message.setExtra("Bmob");
+                WeTalkMsg message = WeTalkMsg.createTextSendMsg(this, targetId, msg);
+                message.setExtra("WeTalk");
                 // 默认发送完成，将数据保存到本地消息表和最近会话表中
-                manager.sendTextMessage(targetUser, message);*/
+                manager.sendTextMessage(targetUser, message);
                 // 刷新界面
-                //refreshMessage(message);
+                refreshMessage(message);
                 break;
             case R.id.tv_camera:// 拍照
                 selectImageFromCamera();
@@ -1095,12 +1223,13 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
      * @return void
      * @throws
      */
-    /*private void refreshMessage(BmobMsg msg) {
+    private void refreshMessage(WeTalkMsg msg) {
         // 更新界面
         mAdapter.add(msg);
         mListView.setSelection(mAdapter.getCount() - 1);
+        mAdapter.notifyDataSetChanged();
         edit_user_comment.setText("");
-    }*/
+    }
 
 
     /*@Override

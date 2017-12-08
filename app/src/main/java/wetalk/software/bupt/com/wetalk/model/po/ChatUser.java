@@ -23,6 +23,14 @@ public class ChatUser extends User{
 //	public void setGroups(List<String> groups) {
 //		this.groups = groups;
 //	}
+    public ChatUser(){
+
+    }
+
+    public ChatUser(Integer userid,String username,String password,String avatar,Integer departmentid
+            ,String phone,String email){
+        super(userid,username,password,avatar,departmentid,phone,email);
+    }
 
     public String getDeviceType() {
         return deviceType;

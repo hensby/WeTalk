@@ -15,8 +15,15 @@ public class User {
     private String phone;
     private String email;
     private int userHeader;
-    public User(){
 
+    public User(){
+        this.userID = (int)(Math.random()*10+1);
+        this.userName = "test";
+        this.password = "test";
+        this.avatar = "";
+        this.departmentID = (int)(Math.random()*10+1);
+        this.phone = "112233344";
+        this.email = "test@qq.com";
     }
     public User(Integer userid,String username,String password,String avatar,Integer departmentid
             ,String phone,String email){
