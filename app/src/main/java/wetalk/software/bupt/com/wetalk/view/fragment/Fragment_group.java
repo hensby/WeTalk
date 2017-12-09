@@ -36,7 +36,7 @@ import wetalk.software.bupt.com.wetalk.widget.SideBar;
  * 通讯录Fragment
  */
 
-public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChange,
+public class Fragment_group extends Fragment implements SideBar.OnTextViewChange,
         View.OnClickListener{
     private View layout, layout_head;
     private ListView lvContact;
@@ -81,7 +81,7 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
 
 
     private void initData(){
-        String[] name={"张三","李四","王二","麻子","快递员","申通","建设银行","圆通","阿里巴巴","百度","腾讯","华为","菜鸟","滴滴","饿了么","飞猪","京东","今日头条"};
+        String[] name={"androidgroup","iosgroup","webgroup"};
         this.userList=new ArrayList<>();
         for (int i=0;i<name.length;i++){
             User user=new User();
@@ -159,9 +159,8 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
 //            case R.id.layout_addfriend:// 添加好友
 //                Utils.start_Activity(getActivity(), NewFriendsListActivity.class);
 //                break;
-           case R.id.layout_group:// 群聊
-               Intent intent = new Intent(mActivity,GroupListActivity.class);
-               context.startActivity(intent);
+//            case R.id.layout_group:// 群聊
+
 //                Utils.start_Activity(getActivity(), GroupListActivity.class);
 //                break;
 //            default:
