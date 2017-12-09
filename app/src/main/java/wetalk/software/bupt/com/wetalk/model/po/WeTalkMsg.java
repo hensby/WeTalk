@@ -306,7 +306,25 @@ public class WeTalkMsg extends WeTalkObject {
      * @throws
      */
     public static WeTalkMsg createSendMessage(final Context context,final String receiptId,String content,Integer status,Integer msgtype){
-        ChatUser loginUser =  new ChatUser();
+        ChatUser loginUser =  new ChatUser(11011,"张杰","zhangjie","",1,"15600992328","zx.zhangjie@qq.com");
+        String loginId = String.valueOf(loginUser.getUserID());
+        WeTalkMsg message = new WeTalkMsg("",loginId+"&"+receiptId,
+                content,
+                receiptId,
+                loginId,
+                loginUser.getUserName(),
+                loginUser.getAvatar()==null ? "" :
+                        loginUser.getAvatar(),
+                loginUser.getNick(),
+                String.valueOf(WeTalkUtils.getTimeStamp()),
+                msgtype,
+                WeTalkConfig.STATE_UNREAD,
+                status);
+        return message;
+    }
+
+    public static WeTalkMsg createRecMessage(final Context context,final String receiptId,String content,Integer status,Integer msgtype){
+        ChatUser loginUser =  new ChatUser(11012,"刘楠","liunan","",1,"15600992328","liunan@qq.com");
         String loginId = String.valueOf(loginUser.getUserID());
         WeTalkMsg message = new WeTalkMsg("",loginId+"&"+receiptId,
                 content,

@@ -25,5 +25,5 @@
     <dimen name="score_item_height">100.0dip</dimen>
      <dimen name="message_top_height">70.0dip</dimen>
      
-     <dimen name="margin_chat_top">5.0dip</dimen>
+     <dimen name="margin_chat_top">10.0dp</dimen>
 </resources>
