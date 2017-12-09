@@ -223,7 +223,6 @@
             android:layout_marginLeft="20dp"
             android:text="删除好友"
             android:layout_below="@+id/bt_send"
-
              />
 
 

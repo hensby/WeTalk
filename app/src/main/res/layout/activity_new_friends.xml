@@ -24,8 +24,8 @@
         android:hint="账号/手机号"
         android:focusable="false"
         android:focusableInTouchMode="false"
-
         />
+
 
 
 </LinearLayout>
