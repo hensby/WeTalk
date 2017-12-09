@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,8 +21,9 @@ public class UserInfoActivity extends AppCompatActivity {
     private TextView infoPhoneNumber;
     private TextView infoEmail;
 
-    public static void actionStart(Context context,User user){
+    public static void actionStart(Context context,User user,String action){
         Intent intent=new Intent(context,UserInfoActivity.class);
+        intent.putExtra("action",action);
         intent.putExtra("name",user.getUserName());
         intent.putExtra("department",user.getAvatar());
         intent.putExtra("phoneNumber",user.getPhone());
@@ -35,13 +37,29 @@ public class UserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_info);
         initTitle();
         initViews();
+        if(getIntent().getStringExtra("action").equals("look")){
+        } else if(getIntent().getStringExtra("action").equals("add")){
+            Button bt1=(Button)findViewById(R.id.bt_send);
+            Button bt2=(Button)findViewById(R.id.bt_delete);
+            bt1.setText("添加到通讯录");
+            bt2.setVisibility(View.GONE);
+            bt1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(UserInfoActivity.this,VerifyActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void initTitle(){
         RelativeLayout rvRightImg=(RelativeLayout)findViewById(R.id.rv_img_right);
         rvRightImg.setVisibility(View.GONE);
         TextView txt=(TextView)findViewById(R.id.txt_title);
-        txt.setText("好友资料");
+        txt.setText("详细资料");
+        RelativeLayout rvLeftImg=(RelativeLayout)findViewById(R.id.rv_img_back);
+        rvLeftImg.setVisibility(View.VISIBLE);
     }
 
     private void initViews(){
@@ -56,6 +74,6 @@ public class UserInfoActivity extends AppCompatActivity {
         infoJob.setText(getIntent().getStringExtra("department"));
         infoPhoneNumber.setText(getIntent().getStringExtra("phoneNumber"));
         infoEmail.setText(getIntent().getStringExtra("email"));
-
     }
+
 }

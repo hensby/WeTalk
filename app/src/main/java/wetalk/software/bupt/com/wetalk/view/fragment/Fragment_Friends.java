@@ -96,7 +96,7 @@ public class Fragment_Friends extends Fragment implements SideBar.OnTextViewChan
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position-1>=0){
                     User user=userList.get(position-1);
-                    UserInfoActivity.actionStart(getActivity(),user);
+                    UserInfoActivity.actionStart(getActivity(),user,"look");
                 }
             }
         });

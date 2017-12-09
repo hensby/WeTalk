@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.icon_menu_group));
         titlePopup.addAction(new ActionItem(this, R.string.menu_addfriend,
                 R.drawable.icon_menu_addfriend));
+        titlePopup.addAction(new ActionItem(this,"部门信息",R.drawable.icon_department));
     }
 
     private TitlePopup.OnItemOnClickListener onitemClick = new TitlePopup.OnItemOnClickListener() {
@@ -143,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case 1:// 添加朋友
+                    Intent intent1=new Intent(MainActivity.this,AddFriendsActivity.class);
+                    startActivity(intent1);
                     break;
                 default:
                     break;

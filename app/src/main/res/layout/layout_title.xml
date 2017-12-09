@@ -14,6 +14,7 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:background="@drawable/rv_img_selector"
+        android:visibility="gone"
         android:padding="5dp"
         >
         <ImageView
@@ -21,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="22dp"
             android:layout_centerVertical="true"
-            android:visibility="gone"
+
             android:contentDescription="@string/app_name"
             android:src="@drawable/icon_back" />
       </RelativeLayout>
