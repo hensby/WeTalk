@@ -64,7 +64,9 @@ public class MessageChatAdapter extends BaseListAdapter<WeTalkMsg> {
     public MessageChatAdapter(Context context, List<WeTalkMsg> msgList) {
         // TODO Auto-generated constructor stub
         super(context, msgList);
+        //需要获取到当前用户id
         //currentObjectId = WeTalkUserManager.getInstance(context).getCurrentUserObjectId();
+        currentObjectId = "11011";
 
         options = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.drawable.ic_launcher)

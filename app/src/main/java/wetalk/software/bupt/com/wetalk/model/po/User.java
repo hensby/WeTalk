@@ -2,11 +2,13 @@ package wetalk.software.bupt.com.wetalk.model.po;
 
 import android.content.Context;
 
+import java.io.Serializable;
+
 /**
  * Created by ww on 2017/12/2.
  */
 
-public class User {
+public class User implements Serializable{
     private Integer userID;
     private String userName;
     private String password;

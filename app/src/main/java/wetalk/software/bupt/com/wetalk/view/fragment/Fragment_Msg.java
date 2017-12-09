@@ -18,7 +18,9 @@ import java.util.List;
 
 import wetalk.software.bupt.com.wetalk.R;
 import wetalk.software.bupt.com.wetalk.adapter.MessageRecentAdapter;
+import wetalk.software.bupt.com.wetalk.model.po.ChatUser;
 import wetalk.software.bupt.com.wetalk.model.po.RecentContacts;
+import wetalk.software.bupt.com.wetalk.model.po.User;
 import wetalk.software.bupt.com.wetalk.view.activity.ChatActivity;
 
 
@@ -32,12 +34,13 @@ public class Fragment_Msg extends Fragment implements OnItemClickListener,OnItem
 	MessageRecentAdapter adapter;
 	private List<RecentContacts> recentContacts = new ArrayList<>();
 	ListView listview;
+	private String msg;
 
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){
-
 		View view = inflater.inflate(R.layout.fragment_recent, container, false);
-		RecentContacts re = new RecentContacts(R.mipmap.a1,"王恒超","你干嘛?",new SimpleDateFormat("HH:mm").format(new Date()));
+		msg="北京邮电大学软件学院";
+		RecentContacts re = new RecentContacts(R.mipmap.a1,"刘楠",msg,new SimpleDateFormat("HH:mm").format(new Date()));
 		recentContacts.add(re);
 		listview = (ListView)view.findViewById(R.id.list);
 		listview.setOnItemClickListener(this);
@@ -56,15 +59,19 @@ public class Fragment_Msg extends Fragment implements OnItemClickListener,OnItem
 //	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Intent intent = new Intent(getActivity(), ChatActivity.class);
+		//传递给chatactivity的时候需要带上user,这个里还需要msg，别的不用
+		ChatUser user=new ChatUser(11012,"刘楠","liunan","",1,"15600992328","liunan@qq.com");
+		Intent intent = new Intent(getActivity(), ChatActivity.class);
+		intent.putExtra("user",user);
+		intent.putExtra("msg",msg);
 		startActivity(intent);
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
 		return true;
 	}
+
 //	private void initRecentContacts(){
 //		RecentContacts wanghengchao = new RecentContacts(R.mipmap.a1,"王恒超","吃饭了么？",lastMessage.getTime() );
 //		recentContacts.add(wanghengchao);

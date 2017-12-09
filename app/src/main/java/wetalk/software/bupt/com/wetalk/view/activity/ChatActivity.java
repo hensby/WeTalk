@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -74,7 +75,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
 
     EmoticonsEditText edit_user_comment;
 
-    String targetId = "";
+    String targetId = "",historyMsg="";
 
     ChatUser targetUser;
 
@@ -99,14 +100,14 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         manager = ChatManager.getInstance(this);
         MsgPagerNum = 0;
         // 组装聊天对象
         targetUser = (ChatUser) getIntent().getSerializableExtra("user");
-        if(targetUser==null) targetUser=new ChatUser(11011,"zhangjie","zhangjie","",1,"15600992328","zx.zhangjie@qq.com");
+        historyMsg = getIntent().getStringExtra("msg");
+        if(targetUser==null) targetUser=new ChatUser(11012,"刘楠","liunan","",1,"15600992328","liunan@qq.com");
         targetId = String.valueOf(targetUser.getUserID());
         //BmobLog.i("聊天对象：" + targetUser.getUserName() + ",targetId = "
 //				+ targetId);
@@ -159,10 +160,28 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
     private void initView() {
         mHeaderLayout = (HeaderLayout) findViewById(R.id.common_actionbar);
         mListView = (XListView) findViewById(R.id.mListView);
-        //initTopBarForLeft("与" + targetUser.getUserName() + "对话");
+        initTopBarForLeft("与" + targetUser.getUserName() + "对话");
         initBottomView();
         initXListView();
         initVoiceView();
+    }
+
+    public void initTopBarForLeft(String titleName) {
+        mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+        mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
+        mHeaderLayout.setTitleAndLeftImageButton(titleName,
+                R.drawable.base_action_bar_back_bg_selector,
+                new OnLeftButtonClickListener());
+    }
+
+    // 左边按钮的点击事件
+    public class OnLeftButtonClickListener implements
+            HeaderLayout.onLeftImageButtonClickListener {
+
+        @Override
+        public void onClick() {
+            finish();
+        }
     }
 
     /**
@@ -386,127 +405,11 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
 
     private List<WeTalkMsg> initMsgData() {
         //List<WeTalkMsg> list = BmobDB.create(this).queryMessages(targetId, MsgPagerNum);
-        List<WeTalkMsg> list=new List<WeTalkMsg>() {
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<WeTalkMsg> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] ts) {
-                return null;
-            }
-
-            @Override
-            public boolean add(WeTalkMsg weTalkMsg) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends WeTalkMsg> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int i, @NonNull Collection<? extends WeTalkMsg> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> collection) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public WeTalkMsg get(int i) {
-                return null;
-            }
-
-            @Override
-            public WeTalkMsg set(int i, WeTalkMsg weTalkMsg) {
-                return null;
-            }
-
-            @Override
-            public void add(int i, WeTalkMsg weTalkMsg) {
-
-            }
-
-            @Override
-            public WeTalkMsg remove(int i) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public ListIterator<WeTalkMsg> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<WeTalkMsg> listIterator(int i) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<WeTalkMsg> subList(int i, int i1) {
-                return null;
-            }
-        };
+        List<WeTalkMsg> list = new LinkedList<WeTalkMsg>();
+        if (!historyMsg.equals("")){
+            WeTalkMsg message = WeTalkMsg.createRecMessage(this, targetId, historyMsg,0,1);
+            list.add(message);
+        }
         return list;
     }
 
@@ -900,11 +803,11 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
                     ShowToast(R.string.network_tips);
                     // return;
                 }
-                // 组装BmobMessage对象
+                // 组装Message对象
                 WeTalkMsg message = WeTalkMsg.createTextSendMsg(this, targetId, msg);
                 message.setExtra("WeTalk");
                 // 默认发送完成，将数据保存到本地消息表和最近会话表中
-                manager.sendTextMessage(targetUser, message);
+                //manager.sendTextMessage(targetUser, message);
                 // 刷新界面
                 refreshMessage(message);
                 break;
@@ -1227,7 +1130,6 @@ public class ChatActivity extends FragmentActivity implements OnClickListener,
         // 更新界面
         mAdapter.add(msg);
         mListView.setSelection(mAdapter.getCount() - 1);
-        mAdapter.notifyDataSetChanged();
         edit_user_comment.setText("");
     }
 
