@@ -43,8 +43,7 @@ public class Fragment_group extends Fragment implements SideBar.OnTextViewChange
     private SideBar indexBar;
     private TextView mDialogText;
     private ClearEditText mClearEditText;
-    private Activity mActivity;
-    private Context context;
+
     /**
      * 汉字转换为拼音的类
      */
@@ -59,9 +58,6 @@ public class Fragment_group extends Fragment implements SideBar.OnTextViewChange
                              Bundle savedInstanceState) {
         this.inflater=inflater;
         layout = inflater.inflate(R.layout.fragment_friends, null);
-        mActivity = getActivity();
-        context = getContext();
-
         initViews();
         initData();
         setOnListener();
@@ -73,9 +69,9 @@ public class Fragment_group extends Fragment implements SideBar.OnTextViewChange
         mDialogText = (TextView) layout.findViewById(R.id.tv_char);
         indexBar = (SideBar) layout.findViewById(R.id.sideBar);
         indexBar.setTextView(mDialogText);
-        layout_head = inflater.inflate(R.layout.layout_head_friend, null);
+        //layout_head = inflater.inflate(R.layout.layout_head_friend, null);
         mClearEditText = (ClearEditText)layout.findViewById(R.id.et_msg_search);
-        lvContact.addHeaderView(layout_head);
+        //lvContact.addHeaderView(layout_head);
     }
 
 
@@ -112,9 +108,9 @@ public class Fragment_group extends Fragment implements SideBar.OnTextViewChange
         //设置侧边栏的点击事件
         indexBar.setOnTextViewChange(this);
         //设置添加好友的点击事件
-        layout_head.findViewById(R.id.layout_addfriend).setOnClickListener(this);
+        //layout_head.findViewById(R.id.layout_addfriend).setOnClickListener(this);
         //设置群聊的点击事件
-        layout_head.findViewById(R.id.layout_group).setOnClickListener(this);
+        //layout_head.findViewById(R.id.layout_group).setOnClickListener(this);
         //设置搜索框的文本改变事件
         mClearEditText.addTextChangedListener(new TextWatcher() {
             @Override
